@@ -3,9 +3,9 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import SplitType from "split-type";
+import { SplitText } from "gsap/all";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function About() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -21,13 +21,13 @@ export default function About() {
     const creativityRef = useRef<HTMLSpanElement>(null);
 
     useGSAP(() => {
-        const splitTitle = new SplitType(titleRef.current!, { types: 'lines', tagName: 'span' });
-        const splitText1 = new SplitType(textRef1.current!, { types: 'lines', tagName: 'span' });
-        const splitText2 = new SplitType(textRef2.current!, { types: 'lines', tagName: 'span' });
+        const splitTitle = new SplitText(titleRef.current!, { type: 'lines' });
+        const splitText1 = new SplitText(textRef1.current!, { type: 'lines' });
+        const splitText2 = new SplitText(textRef2.current!, { type: 'lines' });
 
         // Team Section Split
-        const splitTeamTitle = new SplitType(teamTitleRef.current!, { types: 'lines', tagName: 'span' });
-        const splitTeamText = new SplitType(teamTextRef.current!, { types: 'lines', tagName: 'span' });
+        const splitTeamTitle = new SplitText(teamTitleRef.current!, { type: 'lines' });
+        const splitTeamText = new SplitText(teamTextRef.current!, { type: 'lines' });
 
         const tl = gsap.timeline({
             scrollTrigger: {

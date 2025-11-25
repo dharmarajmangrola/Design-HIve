@@ -3,10 +3,10 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
-import SplitType from 'split-type';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Home() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -17,8 +17,8 @@ export default function Home() {
 
     useGSAP(
         () => {
-            const splitTitle = new SplitType(titleRef.current!, { types: 'lines', tagName: 'span' });
-            const splitText = new SplitType(textRef.current!, { types: 'lines', tagName: 'span' });
+            const splitTitle = new SplitText(titleRef.current!, { type: 'lines' });
+            const splitText = new SplitText(textRef.current!, { type: 'lines' });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -105,7 +105,7 @@ export default function Home() {
                             quae ab illo inventore veritatis et quasi architecto beatae vitae
                             dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
                             aspernatur aut odit aut fugit  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
-                            perspiciatis unde omnis iste natus error sit voluptatem  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                            perspiciatis unde omnis iste natus error sit voluptatem  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             <br />
                             <br />
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut

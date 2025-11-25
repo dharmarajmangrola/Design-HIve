@@ -53,7 +53,7 @@ export default function Preloader() {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 z-[9999] flex w-full h-screen"
+            className="fixed inset-0 z-9999 flex w-full h-screen"
         >
             {/* Left Panel */}
             <div
