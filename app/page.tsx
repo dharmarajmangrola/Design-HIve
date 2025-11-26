@@ -7,7 +7,7 @@ import Footer from "./Components/Footer";
 
 export default function Page() {
   return (
-    <main className="relative">
+    <main className="relative overflow-hidden">
       <Preloader />
       <Navbar />
       <Home />

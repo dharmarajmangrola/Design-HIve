@@ -60,8 +60,8 @@ export default function Projects() {
         // Initial state setup
         gsap.set(cards, {
             zIndex: (i) => cards.length - i,
-            scale: (i) => 1 - (i * 0.1), // Less drastic scale difference
-            y: (i) => i * 20, // Slight vertical offset for stacking effect
+            scale: (i) => 1 - (i * 0.1),
+            y: (i) => i * 20,
             transformOrigin: "center top"
         });
 
@@ -72,6 +72,7 @@ export default function Projects() {
                 end: `+=${cards.length * 100}%`,
                 pin: true,
                 scrub: 1,
+                invalidateOnRefresh: true, // 1. IMPORTANT: Recalculate values on resize
             }
         });
 
@@ -79,7 +80,8 @@ export default function Projects() {
         cards.forEach((card, i) => {
             if (i < cards.length - 1) {
                 tl.to(card as gsap.TweenTarget, {
-                    y: -window.innerHeight, // Move completely out of view
+                    // 2. IMPORTANT: Use a function () => ... so it re-evaluates the height
+                    y: () => -window.innerHeight, 
                     duration: 1,
                     ease: "power2.inOut"
                 })
@@ -88,7 +90,7 @@ export default function Projects() {
                         y: 0,
                         duration: 1,
                         ease: "power2.inOut"
-                    }, "<"); // Run simultaneously
+                    }, "<");
             }
         });
 
@@ -99,13 +101,11 @@ export default function Projects() {
             {/* Existing Projects Grid Section */}
             <section className="min-h-screen w-full py-24 px-8 md:px-16 lg:px-24 flex flex-col justify-center">
                 <div className="max-w-[1400px] mx-auto w-full">
-                    {/* Header */}
                     <div className="flex flex-col justify-center items-center mb-16 md:mb-24">
                         <h2 className="text-5xl md:text-7xl font-light tracking-wide uppercase mb-12 text-center">
                             Projects
                         </h2>
 
-                        {/* Categories */}
                         <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm md:text-base tracking-widest uppercase font-medium opacity-80">
                             <span className="cursor-pointer hover:opacity-100 transition-opacity">Ongoing Project</span>
                             <span className="cursor-pointer hover:opacity-100 transition-opacity">Completed Project</span>
@@ -114,7 +114,6 @@ export default function Projects() {
                         </div>
                     </div>
 
-                    {/* Projects Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
                         {projects.map((project) => (
                             <div key={project.id} className="group cursor-pointer">
@@ -137,7 +136,6 @@ export default function Projects() {
                         ))}
                     </div>
 
-                    {/* View All Button */}
                     <div className="flex justify-center">
                         <button className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300">
                             View All Works

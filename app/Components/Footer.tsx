@@ -5,27 +5,26 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-[#F3F0E7] text-black pt-24 pb-8 px-8 md:px-16 lg:px-24 flex flex-col justify-between">
+        <footer className="w-full bg-[#F3F0E7] text-black pt-24 pb-8 px-8 md:px-16 lg:px-24 flex flex-col justify-between items-center">
             {/* Top Section */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24 justify-items-center items-center">
                 {/* Logo Column */}
                 <div className="md:col-span-3 flex flex-col justify-start">
-                    <div className="flex items-center gap-2 mb-8">
-                        {/* Placeholder for Logo if image not available, or use text */}
-                        <div className="grid grid-cols-2 gap-1 w-8 h-8">
-                            <div className="bg-black rounded-full w-full h-full"></div>
-                            <div className="bg-black rounded-full w-full h-full"></div>
-                            <div className="bg-black rounded-full w-full h-full"></div>
-                            <div className="bg-black rounded-full w-full h-full"></div>
-                        </div>
-                        <span className="text-xl font-bold tracking-widest">DESIGN<br />HIVE</span>
+                    <div className="flex items-center gap-2 mix-blend-difference">
+                        <Image
+                            src="/logo.png"
+                            alt="Design Hive Logo"
+                            width={160}
+                            height={160}
+                            className="object-contain"
+                        />
                     </div>
                 </div>
 
                 {/* Navigation Column */}
-                <div className="md:col-span-3 flex flex-col gap-6">
+                <div className="md:col-span-3 flex flex-col gap-6 justify-center items-center">
                     <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(NAVIGATION)</h3>
-                    <nav className="flex flex-col gap-2 text-lg opacity-80">
+                    <nav className="flex flex-col gap-2 text-lg opacity-80 justify-center items-center">
                         <Link href="/" className="hover:opacity-100 transition-opacity">Home</Link>
                         <Link href="#about" className="hover:opacity-100 transition-opacity">About Us</Link>
                         <Link href="#projects" className="hover:opacity-100 transition-opacity">Projects</Link>
@@ -45,9 +44,9 @@ export default function Footer() {
                 </div>
 
                 {/* Information Column */}
-                <div className="md:col-span-3 flex flex-col gap-6">
+                <div className="md:col-span-3 flex flex-col gap-6 justify-center items-center">
                     <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(INFORMATION)</h3>
-                    <div className="flex flex-col gap-2 text-lg opacity-80">
+                    <div className="flex flex-col gap-2 text-lg opacity-80 justify-center items-center text-center">
                         <p>Address: 1032, lorem isoum,290834</p>
                         <p>Email: info@lorem.com</p>
                         <p>Phone: 0283383838</p>

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/all";
@@ -14,43 +14,69 @@ export default function Home() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const textRef = useRef<HTMLParagraphElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    
+    // FIX PART 1: Add a state to track if the component has mounted
+    const [isMounted, setIsMounted] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(0);
+
+    useEffect(() => {
+        // FIX PART 2: Set mounted to true once the client loads
+        setIsMounted(true);
+
+        let timeoutId: NodeJS.Timeout;
+        const handleResize = () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setWindowWidth(window.innerWidth);
+            }, 200);
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearTimeout(timeoutId);
+        };
+    }, []);
 
     useGSAP(
         () => {
-            const splitTitle = new SplitText(titleRef.current!, { type: 'lines' });
-            const splitText = new SplitText(textRef.current!, { type: 'lines' });
+            if (!titleRef.current || !textRef.current) return;
+
+            const splitTitle = new SplitText(titleRef.current, { type: 'lines' });
+            const splitText = new SplitText(textRef.current, { type: 'lines' });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: titleRef.current,
-                    start: "top 80%",
-                    end: "bottom 20%",
+                    start: "top 70%",
                     toggleActions: "play none none none",
                 },
             });
 
-            // Set initial state: hidden below with clip-path
             gsap.set(splitTitle.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
             gsap.set(splitText.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
 
-            // Animate Title Chars
             tl.to(splitTitle.lines, {
                 y: "0%",
                 clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                duration: 0.8,
+                duration: 1,
                 ease: "power3.out"
             })
-                // Animate Text Lines
-                .to(splitText.lines, {
-                    y: "0%",
-                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                    duration: 0.8,
-                    ease: "power3.out",
-                    stagger: 0.1
-                }, "-=0.5");
+            .to(splitText.lines, {
+                y: "0%",
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                duration: 1,
+                ease: "power3.out",
+                stagger: 0.05
+            }, "-=0.8");
 
+            return () => {
+                splitTitle.revert();
+                splitText.revert();
+            };
         },
-        { scope: containerRef }
+        { scope: containerRef, dependencies: [windowWidth] }
     );
 
     const handleMouseEnter = () => {
@@ -88,6 +114,7 @@ export default function Home() {
                     <div className="overflow-hidden mb-12">
                         <h2
                             ref={titleRef}
+                            key={`home-title-${windowWidth}`}
                             className="text-4xl md:text-6xl font-light tracking-wide uppercase"
                         >
                             Why Design Hive ?
@@ -97,6 +124,7 @@ export default function Home() {
                     <div className="mb-10">
                         <p
                             ref={textRef}
+                            key={`home-text-${windowWidth}`}
                             className="text-lg md:text-xl leading-loose opacity-80"
                         >
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
@@ -119,44 +147,49 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Video Section */}
-            <div
-                className="relative w-full aspect-video overflow-hidden cursor-pointer group"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
-                <video
-                    ref={videoRef}
-                    src="/hero-video.mp4"
-                    className="w-full h-full object-cover"
-                    loop
-                    muted
-                    playsInline
-                />
-
-                {/* Play Button Overlay */}
+            {/* Video Section - FIX PART 3: Only render this div if mounted on client */}
+            {isMounted ? (
                 <div
-                    className={`absolute inset-0 flex justify-center items-center transition-opacity duration-300 ${isPlaying ? "opacity-0" : "opacity-100"
-                        }`}
+                    className="relative w-full aspect-video overflow-hidden cursor-pointer group"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 >
-                    <div className="w-20 h-20 bg-black/30 backdrop-blur-sm rounded-full flex justify-center items-center border border-white/20">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="white"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-10 h-10 text-white ml-1"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                            />
-                        </svg>
+                    <video
+                        ref={videoRef}
+                        src="/hero-video.mp4"
+                        className="w-full h-full object-cover"
+                        loop
+                        muted
+                        playsInline
+                    />
+
+                    {/* Play Button Overlay */}
+                    <div
+                        className={`absolute inset-0 flex justify-center items-center transition-opacity duration-300 ${isPlaying ? "opacity-0" : "opacity-100"
+                            }`}
+                    >
+                        <div className="w-20 h-20 bg-black/30 backdrop-blur-sm rounded-full flex justify-center items-center border border-white/20">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="white"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-10 h-10 text-white ml-1"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+                                />
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                // Optional: Render a placeholder of the same size so layout doesn't jump
+                <div className="w-full aspect-video bg-gray-200"></div>
+            )}
         </div>
     );
 }

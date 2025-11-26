@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -20,20 +20,40 @@ export default function About() {
     const qualityRef = useRef<HTMLSpanElement>(null);
     const creativityRef = useRef<HTMLSpanElement>(null);
 
-    useGSAP(() => {
-        const splitTitle = new SplitText(titleRef.current!, { type: 'lines' });
-        const splitText1 = new SplitText(textRef1.current!, { type: 'lines' });
-        const splitText2 = new SplitText(textRef2.current!, { type: 'lines' });
+    const [windowWidth, setWindowWidth] = useState(0);
 
-        // Team Section Split
-        const splitTeamTitle = new SplitText(teamTitleRef.current!, { type: 'lines' });
-        const splitTeamText = new SplitText(teamTextRef.current!, { type: 'lines' });
+    useEffect(() => {
+        // Debounce resize to avoid excessive re-renders
+        let timeoutId: NodeJS.Timeout;
+        const handleResize = () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setWindowWidth(window.innerWidth);
+            }, 200); // 200ms delay to wait for resize to finish
+        };
+
+        handleResize(); // Set initial width
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearTimeout(timeoutId);
+        };
+    }, []);
+
+    useGSAP(() => {
+        // Ensure elements exist before splitting
+        if (!titleRef.current || !textRef1.current || !textRef2.current || !teamTitleRef.current || !teamTextRef.current) return;
+
+        const splitTitle = new SplitText(titleRef.current, { type: 'lines' });
+        const splitText1 = new SplitText(textRef1.current, { type: 'lines' });
+        const splitText2 = new SplitText(textRef2.current, { type: 'lines' });
+        const splitTeamTitle = new SplitText(teamTitleRef.current, { type: 'lines' });
+        const splitTeamText = new SplitText(teamTextRef.current, { type: 'lines' });
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 60%",
-                end: "bottom bottom",
+                start: "top 70%",
                 toggleActions: "play none none none"
             }
         });
@@ -41,8 +61,6 @@ export default function About() {
         // Set initial state
         gsap.set(splitTitle.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
         gsap.set([splitText1.lines, splitText2.lines], { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
-
-        // Team Section Initial State
         gsap.set([splitTeamTitle.lines, splitTeamText.lines], { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
 
         // Animate Title
@@ -53,22 +71,22 @@ export default function About() {
             ease: "power3.out",
             stagger: 0.05
         })
-            // Animate Text 1
-            .to(splitText1.lines, {
-                y: "0%",
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                duration: 1,
-                ease: "power3.out",
-                stagger: 0.05
-            }, "-=0.5")
-            // Animate Text 2
-            .to(splitText2.lines, {
-                y: "0%",
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                duration: 1,
-                ease: "power3.out",
-                stagger: 0.05
-            }, "-=0.8");
+        // Animate Text 1
+        .to(splitText1.lines, {
+            y: "0%",
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.05
+        }, "-=0.8")
+        // Animate Text 2
+        .to(splitText2.lines, {
+            y: "0%",
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.05
+        }, "-=0.8");
 
         // Image Section Scrub Animation
         gsap.timeline({
@@ -117,18 +135,32 @@ export default function About() {
             .fromTo(qualityRef.current, { x: "-10%" }, { x: "10%", duration: 1 })
             .fromTo(creativityRef.current, { x: "10%" }, { x: "-10%", duration: 1 }, "<");
 
-    }, { scope: containerRef });
+        // Refresh ScrollTrigger to ensure start/end positions are correct after layout changes
+        ScrollTrigger.refresh();
+
+        return () => {
+            // Revert restores the original text content, removing the divs SplitText created
+            splitTitle.revert();
+            splitText1.revert();
+            splitText2.revert();
+            splitTeamTitle.revert();
+            splitTeamText.revert();
+        };
+
+    }, { scope: containerRef, dependencies: [windowWidth] });
 
     return (
         <section ref={containerRef} className="min-h-screen w-full bg-background text-foreground flex flex-col items-center border-b border-black">
             <div className="max-w-4xl w-full text-center px-8 md:px-16 lg:px-24">
                 <div className="overflow-hidden mb-16">
-                    <h2 ref={titleRef} className="text-5xl md:text-7xl font-light tracking-wide uppercase">
+                    {/* KEY FIX: The key prop forces this element to re-render on resize, clearing old splits */}
+                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-5xl md:text-7xl font-light tracking-wide uppercase">
                         About Us
                     </h2>
                 </div>
 
-                <div className="space-y-12 text-lg md:text-xl leading-relaxed opacity-80">
+                {/* KEY FIX: Applying key to the container of the text paragraphs */}
+                <div className="space-y-12 text-lg md:text-xl leading-relaxed opacity-80" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
                     </p>
@@ -170,24 +202,26 @@ export default function About() {
             <div className="w-full h-1 bg-foreground/20 mt-12 mb-32"></div>
 
             {/* Our Team Section */}
-            <div ref={teamSectionRef} className="w-full max-w-7xl mb-32 flex flex-col md:flex-row gap-16 items-center">
+            <div ref={teamSectionRef} className="w-full max-w-7xl mb-32 px-8 flex flex-col md:flex-row gap-16 items-center">
                 {/* Left Text */}
-                <div className="w-full md:w-[90%] space-y-8">
+                <div className="w-full space-y-8 text-center">
                     <div>
-                        <span className="text-xl opacity-80 block mb-2">HIVE Group®</span>
+                        <span className="md:text-xl text-[16px] opacity-80 block mb-2">HIVE Group®</span>
                         <div className="overflow-hidden">
-                            <h2 ref={teamTitleRef} className="text-4xl md:text-6xl whitespace-nowrap font-light">Our Team</h2>
+                            {/* KEY FIX: Adding key here too */}
+                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-5xl md:text-6xl whitespace-nowrap font-light">Our Team</h2>
                         </div>
                     </div>
                     <div className="overflow-hidden">
-                        <p ref={teamTextRef} className="text-lg opacity-80 leading-relaxed">
+                        {/* KEY FIX: Adding key here too */}
+                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg opacity-80 leading-relaxed">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
                         </p>
                     </div>
                 </div>
                 {/* Right Image */}
-                <div className="w-full relative h-[400px] md:h-[600px] rounded-4xl overflow-hidden">
-                    <img src="/our-team.jpg" alt="Our Team" className="object-contain w-full h-full" />
+                <div className="w-full relative h-[400px] md:h-[400px] rounded-4xl overflow-hidden">
+                    <img src="/our-team.jpg" alt="Our Team" className="object-cover w-full h-full" />
                 </div>
             </div>
 
