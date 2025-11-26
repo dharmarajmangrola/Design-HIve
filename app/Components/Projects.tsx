@@ -149,7 +149,7 @@ export default function Projects() {
                 {featuredProjects.map((project, index) => (
                     <div
                         key={project.id}
-                        className="featured-card absolute w-[90%] max-w-[1200px] h-[80vh] rounded-3xl overflow-hidden border border-white/20 bg-neutral-900 flex items-end p-8 md:p-16 lg:p-24"
+                        className="featured-card absolute w-full h-[80vh] overflow-hidden border border-white/20 bg-neutral-900 flex items-end p-8 md:p-16 lg:p-24"
                     >
                         <Image
                             src={project.image}

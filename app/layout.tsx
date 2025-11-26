@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import SmoothScroll from "./Components/SmoothScroll";
+import Preloader from "./Components/Preloader";
+import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,7 +28,10 @@ export default function RootLayout({
         className={`${inter.variable} antialiased`}
       >
         <SmoothScroll />
+        <Preloader />
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

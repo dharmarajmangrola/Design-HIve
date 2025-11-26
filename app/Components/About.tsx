@@ -16,9 +16,6 @@ export default function About() {
     const teamTitleRef = useRef<HTMLHeadingElement>(null);
     const teamTextRef = useRef<HTMLParagraphElement>(null);
     const teamSectionRef = useRef<HTMLDivElement>(null);
-    const footerSectionRef = useRef<HTMLDivElement>(null);
-    const qualityRef = useRef<HTMLSpanElement>(null);
-    const creativityRef = useRef<HTMLSpanElement>(null);
 
     const [windowWidth, setWindowWidth] = useState(0);
 
@@ -71,22 +68,22 @@ export default function About() {
             ease: "power3.out",
             stagger: 0.05
         })
-        // Animate Text 1
-        .to(splitText1.lines, {
-            y: "0%",
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-            duration: 1,
-            ease: "power3.out",
-            stagger: 0.05
-        }, "-=0.8")
-        // Animate Text 2
-        .to(splitText2.lines, {
-            y: "0%",
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-            duration: 1,
-            ease: "power3.out",
-            stagger: 0.05
-        }, "-=0.8");
+            // Animate Text 1
+            .to(splitText1.lines, {
+                y: "0%",
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                duration: 1,
+                ease: "power3.out",
+                stagger: 0.05
+            }, "-=0.8")
+            // Animate Text 2
+            .to(splitText2.lines, {
+                y: "0%",
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                duration: 1,
+                ease: "power3.out",
+                stagger: 0.05
+            }, "-=0.8");
 
         // Image Section Scrub Animation
         gsap.timeline({
@@ -122,18 +119,6 @@ export default function About() {
                 ease: "power3.out",
                 stagger: 0.05
             }, "-=0.8");
-
-        // Footer Section Scrub Animation
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: footerSectionRef.current,
-                start: "top 90%",
-                end: "bottom 10%",
-                scrub: 1,
-            }
-        })
-            .fromTo(qualityRef.current, { x: "-10%" }, { x: "10%", duration: 1 })
-            .fromTo(creativityRef.current, { x: "10%" }, { x: "-10%", duration: 1 }, "<");
 
         // Refresh ScrollTrigger to ensure start/end positions are correct after layout changes
         ScrollTrigger.refresh();
@@ -223,17 +208,6 @@ export default function About() {
                 <div className="w-full relative h-[400px] md:h-[400px] rounded-4xl overflow-hidden">
                     <img src="/our-team.jpg" alt="Our Team" className="object-cover w-full h-full" />
                 </div>
-            </div>
-
-            {/* Focused on Quality Section */}
-            <div ref={footerSectionRef} className="w-full px-8 md:px-16 lg:px-24 pb-32 text-center overflow-hidden">
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-light uppercase leading-tight mb-16">
-                    <span ref={qualityRef} className="block">Focused on Quality</span>
-                    <span ref={creativityRef} className="block mt-4 md:mt-0">Driven by Creativity</span>
-                </h2>
-                <button className="px-10 py-5 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300">
-                    Tell us about your project
-                </button>
             </div>
         </section>
     );
