@@ -10,7 +10,10 @@ gsap.registerPlugin(SplitText);
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    // 1. Re-added state to track scrolling
     const [isScrolled, setIsScrolled] = useState(false);
+    
     const containerRef = useRef<HTMLDivElement>(null);
     const leftPanelRef = useRef<HTMLDivElement>(null);
     const rightPanelRef = useRef<HTMLDivElement>(null);
@@ -20,6 +23,7 @@ export default function Navbar() {
 
     const { contextSafe } = useGSAP({ scope: containerRef });
 
+    // 2. Re-added useEffect to toggle state on scroll
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 50) {
@@ -35,11 +39,8 @@ export default function Navbar() {
 
     const toggleMenu = contextSafe(() => {
         if (isMenuOpen) {
-            // Close Menu
             tlRef.current?.reverse().then(() => {
                 setIsMenuOpen(false);
-
-                // Hide links again
                 gsap.set(".menu-link", { opacity: 0 });
 
                 if (splitTextRef.current) {
@@ -48,32 +49,24 @@ export default function Navbar() {
                 }
             });
         } else {
-            // Open Menu
             setIsMenuOpen(true);
-
-            // Initialize SplitText
             if (splitTextRef.current) splitTextRef.current.revert();
 
             const split = new SplitText(".menu-link", { type: "lines" });
             splitTextRef.current = split;
 
-            // Initial state for SplitText lines
             gsap.set(split.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
-
-            // Make parents visible so lines can be seen
             gsap.set(".menu-link", { opacity: 1 });
 
             tlRef.current = gsap.timeline();
 
             tlRef.current
-                // Panels join in center
                 .to([leftPanelRef.current, rightPanelRef.current], {
                     x: "0%",
                     duration: 1,
                     ease: "power3.inOut",
                     stagger: 0
                 })
-                // Links fade in AFTER panels join
                 .to(split.lines, {
                     y: "0%",
                     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
@@ -87,22 +80,24 @@ export default function Navbar() {
     return (
         <div ref={containerRef}>
             <nav
-                className={`fixed top-0 left-0 w-full flex justify-between items-center px-8 z-50 text-background transition-all duration-400 ${isScrolled ? "bg-background" : "bg-transparent"
-                    }`}
+                className={`fixed top-0 left-0 w-full flex justify-between items-center mix-blend-difference px-8 z-50 text-background transition-all duration-500 ${
+                    isScrolled 
+                    ? "backdrop-blur-md" 
+                    : "backdrop-blur-none"
+                }`}
             >
-                <div className="flex items-center gap-2 mix-blend-difference">
+                <div className="flex items-center gap-2">
                     <Image
                         src="/logo.png"
                         alt="Design Hive Logo"
-                        width={100}
-                        height={100}
-                        className="object-contain"
+                        width={125}
+                        height={125}
+                        className="object-contain h-22 w-auto" 
                     />
                 </div>
 
-                {/* Custom Hamburger (Static) */}
                 <div
-                    className="flex flex-col gap-1.5 cursor-pointer group w-10 justify-center items-end mix-blend-difference"
+                    className="flex flex-col gap-1.5 cursor-pointer group w-10 justify-center items-end"
                     onClick={toggleMenu}
                 >
                     <div className="w-8 h-[2px] bg-current"></div>
@@ -111,21 +106,18 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {/* Menu Overlay */}
+            {/* Menu Overlay code remains exactly the same */}
             <div className="fixed inset-0 z-40 pointer-events-none">
-                {/* Left Panel */}
                 <div
                     ref={leftPanelRef}
                     className="absolute top-0 left-0 w-1/2 h-full bg-black -translate-x-full pointer-events-auto"
                 ></div>
 
-                {/* Right Panel */}
                 <div
                     ref={rightPanelRef}
                     className="absolute top-0 right-0 w-1/2 h-full bg-black translate-x-full pointer-events-auto"
                 ></div>
 
-                {/* Menu Content */}
                 <div
                     ref={menuContentRef}
                     className={`absolute inset-0 flex flex-col justify-center items-center text-white z-50 ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}

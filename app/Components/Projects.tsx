@@ -3,9 +3,10 @@ import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Projects() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -37,27 +38,33 @@ export default function Projects() {
         {
             id: 1,
             image: "/featured-project-1.jpg",
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            title: "Modern Villa",
+            category: "Residential",
+            description: "A seamless blend of nature and modern architecture, providing a sanctuary of peace.",
         },
         {
             id: 2,
             image: "/featured-project-2.jpg",
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            title: "Urban Loft",
+            category: "Commercial",
+            description: "Redefining city living with sustainable materials and smart spatial design.",
         },
         {
             id: 3,
             image: "/featured-project-3.jpg",
-            title: "Lorem Ipsum",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            title: "The Gallery",
+            category: "Public Space",
+            description: "An open space designed to inspire creativity and foster community interaction.",
         },
     ];
 
     useGSAP(() => {
-        const cards = gsap.utils.toArray(".featured-card");
+        const cards = gsap.utils.toArray<HTMLElement>(".featured-card");
+        
+        const splitTitles = cards.map(card => new SplitText(card.querySelector(".featured-title"), { type: "chars" }));
+        const splitDescs = cards.map(card => new SplitText(card.querySelector(".featured-desc"), { type: "lines" }));
 
-        // Initial state setup
+        // Initial Layout Setup
         gsap.set(cards, {
             zIndex: (i) => cards.length - i,
             scale: (i) => 1 - (i * 0.1),
@@ -65,34 +72,87 @@ export default function Projects() {
             transformOrigin: "center top"
         });
 
+        // 1. Hide Text for ALL cards initially (including the first one)
+        cards.forEach((_, i) => {
+            gsap.set(splitTitles[i].chars, { yPercent: 100, opacity: 0 });
+            gsap.set(splitDescs[i].lines, { yPercent: 100, opacity: 0 });
+        });
+
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top top",
-                end: `+=${cards.length * 100}%`,
+                // 2. Increase 'end' distance to account for the extra step (first card text reveal)
+                end: `+=${(cards.length + 0.5) * 100}%`, 
                 pin: true,
                 scrub: 1,
-                invalidateOnRefresh: true, // 1. IMPORTANT: Recalculate values on resize
+                invalidateOnRefresh: true,
             }
         });
 
-        // Animate each card except the last one
+        // 3. Step 1: Animate FIRST card text IN immediately
+        tl.to(splitTitles[0].chars, {
+            yPercent: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+            stagger: { from: "random", amount: 0.5 }
+        })
+        .to(splitDescs[0].lines, {
+            yPercent: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.1
+        }, "<0.3");
+
+
+        // 4. Step 2: Loop through rest of the cards
         cards.forEach((card, i) => {
             if (i < cards.length - 1) {
-                tl.to(card as gsap.TweenTarget, {
-                    // 2. IMPORTANT: Use a function () => ... so it re-evaluates the height
-                    y: () => -window.innerHeight, 
+                const nextCard = cards[i + 1];
+                const nextTitleChars = splitTitles[i + 1].chars;
+                const nextDescLines = splitDescs[i + 1].lines;
+
+                tl
+                // Move current card OUT
+                .to(card, {
+                    y: () => -window.innerHeight,
+                    scale: 0.9,
                     duration: 1,
                     ease: "power2.inOut"
                 })
-                    .to(cards[i + 1] as gsap.TweenTarget, {
-                        scale: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: "power2.inOut"
-                    }, "<");
+                // Move next card IN
+                .to(nextCard, {
+                    scale: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.inOut"
+                }, "<")
+                
+                // Animate NEXT text IN (Random letters)
+                .to(nextTitleChars, {
+                    yPercent: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    stagger: { from: "random", amount: 0.5 }
+                }, "<0.2")
+                
+                .to(nextDescLines, {
+                    yPercent: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    stagger: 0.1
+                }, "<0.4");
             }
         });
+        
+        return () => {
+            splitTitles.forEach(s => s.revert());
+            splitDescs.forEach(s => s.revert());
+        }
 
     }, { scope: containerRef });
 
@@ -149,21 +209,43 @@ export default function Projects() {
                 {featuredProjects.map((project, index) => (
                     <div
                         key={project.id}
-                        className="featured-card absolute w-full h-[80vh] overflow-hidden border border-white/20 bg-neutral-900 flex items-end p-8 md:p-16 lg:p-24"
+                        className="featured-card absolute w-full h-full overflow-hidden border border-white/10 shadow-2xl"
                     >
                         <Image
                             src={project.image}
                             alt={project.title}
                             fill
-                            className="object-cover opacity-60"
+                            className="object-cover"
                             priority={index === 0}
                         />
-                        <div className="relative z-10 max-w-4xl">
-                            <span className="block text-sm md:text-base tracking-widest uppercase mb-4 opacity-80">Featured Project</span>
-                            <h3 className="text-5xl md:text-7xl font-light mb-8 leading-none">{project.title}</h3>
-                            <p className="text-lg md:text-xl opacity-80 leading-relaxed max-w-2xl">
-                                {project.description}
-                            </p>
+
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
+
+                        {/* Content */}
+                        <div className="relative z-20 w-full h-full flex flex-col justify-end p-8 md:p-16 lg:p-24">
+                            <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-16">
+                                <div className="max-w-3xl">
+                                    <div className="flex items-center gap-4 mb-12">
+                                        <div className="w-12 h-0.5 bg-white/60"></div>
+                                        <span className="text-sm tracking-[0.2em] uppercase font-medium text-white/80">
+                                            {project.category}
+                                        </span>
+                                    </div>
+
+                                    <div className="overflow-hidden mb-12">
+                                        <h3 className="featured-title text-5xl md:text-7xl lg:text-8xl font-light leading-[0.9] uppercase tracking-tight">
+                                            {project.title}
+                                        </h3>
+                                    </div>
+
+                                    <div className="overflow-hidden">
+                                        <p className="featured-desc text-lg md:text-xl text-white/70 font-light leading-relaxed max-w-xl">
+                                            {project.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}

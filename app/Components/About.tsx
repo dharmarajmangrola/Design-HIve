@@ -136,7 +136,7 @@ export default function About() {
 
     return (
         <section ref={containerRef} className="min-h-screen w-full bg-background text-foreground flex flex-col items-center border-b border-black">
-            <div className="max-w-4xl w-full text-center px-8 md:px-16 lg:px-24">
+            <div className="max-w-4xl w-full text-center p-8 md:p-16 lg:p-24">
                 <div className="overflow-hidden mb-16">
                     {/* KEY FIX: The key prop forces this element to re-render on resize, clearing old splits */}
                     <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-5xl md:text-7xl font-light tracking-wide uppercase">
@@ -162,7 +162,7 @@ export default function About() {
             </div>
 
             {/* Separator Line */}
-            <div className="w-full h-1 bg-foreground/20 mt-32 mb-12"></div>
+            <div className="w-full h-1 bg-foreground/20 my-12"></div>
 
             {/* New Image-Text Section */}
             <div ref={imageSectionRef} className="w-full max-w-4xl flex flex-col gap-12 py-12 px-8 md:px-16 lg:px-24">
