@@ -220,7 +220,7 @@ export default function Projects() {
                         />
 
                         {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent z-10" />
 
                         {/* Content */}
                         <div className="relative z-20 w-full h-full flex flex-col justify-end p-8 md:p-16 lg:p-24">

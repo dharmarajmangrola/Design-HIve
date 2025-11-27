@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react"; // 1. Added useEffect
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -20,17 +20,27 @@ export default function Footer() {
 
     const pathname = usePathname();
 
-    // 2. CRITICAL FIX: Refresh ScrollTrigger when page changes
+    // 1. State to track when the page layout is stable
+    const [isFooterReady, setIsFooterReady] = useState(false);
+
+    // 2. Refresh logic: Wait for page transitions/pinning to finish
     useEffect(() => {
-        // Wait 200ms for the new page layout to settle (height changes), then refresh
+        // Reset state immediately when path changes
+        setIsFooterReady(false);
+
+        // Wait 1 second (1000ms) for the new page to load, animations to finish, and layout to settle
         const timer = setTimeout(() => {
+            setIsFooterReady(true);
             ScrollTrigger.refresh();
-        }, 200);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, [pathname]);
 
     useGSAP(() => {
+        // 3. Prevent animations from running if the layout isn't ready
+        if (!isFooterReady) return;
+
         // --- 1. Horizontal Scroll Text Animation ---
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -38,7 +48,7 @@ export default function Footer() {
                 start: "top 90%",
                 end: "bottom 20%",
                 scrub: 1,
-                invalidateOnRefresh: true 
+                invalidateOnRefresh: true
             }
         });
 
@@ -46,11 +56,11 @@ export default function Footer() {
             .fromTo(creativityRef.current, { x: "10%" }, { x: "-10%", duration: 1 }, "<");
 
 
-        // --- 2. "DESIGN HIVE" Random Letter Animation (Re-runs on page change) ---
+        // --- 2. "DESIGN HIVE" Random Letter Animation ---
         if (titleRef.current) {
             // Always revert old split before creating a new one to avoid nesting divs
             const split = new SplitText(titleRef.current, { type: "chars" });
-            
+
             // Set initial state (Hidden down)
             gsap.set(split.chars, { yPercent: 100 });
 
@@ -62,17 +72,20 @@ export default function Footer() {
                 scrollTrigger: {
                     trigger: titleRef.current,
                     start: "top 85%", // Trigger slightly earlier
-                    toggleActions: "play none none reverse" 
+                    toggleActions: "play none none reverse"
                 }
             });
-            
+
             // Cleanup: Revert SplitText when unmounting or changing pages
             return () => {
                 split.revert();
             }
         }
 
-    }, { scope: containerRef, dependencies: [pathname] }); // Re-run whenever pathname changes
+    }, { 
+        scope: containerRef, 
+        dependencies: [isFooterReady] // Key dependency: Re-run this when ready becomes true
+    });
 
     return (
         <footer className="w-full bg-[#F3F0E7] text-black flex flex-col justify-between items-center overflow-hidden">
