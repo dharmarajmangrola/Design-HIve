@@ -4,10 +4,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/all";
+import { useTransition } from "./TransitionProvider";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function About() {
+    const { navigate } = useTransition();
     const containerRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const textRef1 = useRef<HTMLParagraphElement>(null);
@@ -145,7 +147,7 @@ export default function About() {
                 </div>
 
                 {/* KEY FIX: Applying key to the container of the text paragraphs */}
-                <div className="space-y-12 text-lg md:text-xl leading-relaxed opacity-80" key={`text-content-${windowWidth}`}>
+                <div className="space-y-12 text-lg leading-relaxed opacity-80" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
                     </p>
@@ -155,7 +157,10 @@ export default function About() {
                 </div>
 
                 <div className="mt-16">
-                    <button className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300">
+                    <button
+                        onClick={() => navigate('/about')}
+                        className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                    >
                         About Us
                     </button>
                 </div>
@@ -193,12 +198,10 @@ export default function About() {
                     <div>
                         <span className="md:text-xl text-[16px] opacity-80 block mb-2">HIVE Group®</span>
                         <div className="overflow-hidden">
-                            {/* KEY FIX: Adding key here too */}
                             <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-5xl md:text-6xl whitespace-nowrap font-light">Our Team</h2>
                         </div>
                     </div>
                     <div className="overflow-hidden">
-                        {/* KEY FIX: Adding key here too */}
                         <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg opacity-80 leading-relaxed">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
                         </p>

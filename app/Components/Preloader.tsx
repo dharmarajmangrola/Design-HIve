@@ -11,8 +11,12 @@ export default function Preloader() {
     useEffect(() => {
         const tl = gsap.timeline();
 
+        const heroImage = document.querySelector(".hero-image");
+
         // Initial state for Hero Image (targeting class .hero-image)
-        gsap.set(".hero-image", { scale: 1.3 });
+        if (heroImage) {
+            gsap.set(heroImage, { scale: 1.3 });
+        }
 
         tl.to(lineRef.current, {
             scaleY: 1,
@@ -36,16 +40,17 @@ export default function Preloader() {
                 },
                 "<"
             )
-            .to(
-                ".hero-image",
-                {
-                    scale: 1,
-                    duration: 1.5,
-                    ease: "power4.inOut",
-                },
-                "<"
-            )
-            .to(containerRef.current, {
+            if (heroImage) {
+                tl.to(
+                    heroImage, 
+                    { 
+                        scale: 1, 
+                        duration: 1.5, 
+                        ease: "power4.inOut" 
+                    }, "<"
+                )
+            }
+            tl.to(containerRef.current, {
                 display: "none",
             });
     }, []);

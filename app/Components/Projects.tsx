@@ -5,10 +5,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import { useTransition } from "./TransitionProvider";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Projects() {
+    const { navigate } = useTransition();
     const containerRef = useRef<HTMLDivElement>(null);
     const projects = [
         {
@@ -60,7 +62,9 @@ export default function Projects() {
 
     useGSAP(() => {
         const cards = gsap.utils.toArray<HTMLElement>(".featured-card");
-        
+        const categoryLines = gsap.utils.toArray<HTMLElement>(".featured-category-line");
+
+        const splitCategories = cards.map(card => new SplitText(card.querySelector(".featured-category"), { type: "chars" }));
         const splitTitles = cards.map(card => new SplitText(card.querySelector(".featured-title"), { type: "chars" }));
         const splitDescs = cards.map(card => new SplitText(card.querySelector(".featured-desc"), { type: "lines" }));
 
@@ -74,6 +78,7 @@ export default function Projects() {
 
         // 1. Hide Text for ALL cards initially (including the first one)
         cards.forEach((_, i) => {
+            gsap.set(splitCategories[i].chars, { yPercent: 100, opacity: 0 });
             gsap.set(splitTitles[i].chars, { yPercent: 100, opacity: 0 });
             gsap.set(splitDescs[i].lines, { yPercent: 100, opacity: 0 });
         });
@@ -82,8 +87,7 @@ export default function Projects() {
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top top",
-                // 2. Increase 'end' distance to account for the extra step (first card text reveal)
-                end: `+=${(cards.length + 0.5) * 100}%`, 
+                end: `+=${(cards.length + 0.5) * 100}%`,
                 pin: true,
                 scrub: 1,
                 invalidateOnRefresh: true,
@@ -91,65 +95,88 @@ export default function Projects() {
         });
 
         // 3. Step 1: Animate FIRST card text IN immediately
-        tl.to(splitTitles[0].chars, {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            stagger: { from: "random", amount: 0.5 }
-        })
-        .to(splitDescs[0].lines, {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            stagger: 0.1
-        }, "<0.3");
+        tl
+            .to(categoryLines[0], {
+                width: "3rem",
+                duration: 1,
+                ease: "power3.out",
+            })
+            .to(splitTitles[0].chars, {
+                yPercent: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out"
+            }, "<0.3")
+            .to(splitDescs[0].lines, {
+                yPercent: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+                stagger: 0.1
+            }, "<0.3")
+            .to(splitCategories[0].chars, {
+                yPercent: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out"
+            }, "<")
 
 
         // 4. Step 2: Loop through rest of the cards
         cards.forEach((card, i) => {
             if (i < cards.length - 1) {
                 const nextCard = cards[i + 1];
-                const nextTitleChars = splitTitles[i + 1].chars;
-                const nextDescLines = splitDescs[i + 1].lines;
+                const nextTitle = splitTitles[i + 1].chars;
+                const nextDesc = splitDescs[i + 1].lines;
 
                 tl
-                // Move current card OUT
-                .to(card, {
-                    y: () => -window.innerHeight,
-                    scale: 0.9,
-                    duration: 1,
-                    ease: "power2.inOut"
-                })
-                // Move next card IN
-                .to(nextCard, {
-                    scale: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.inOut"
-                }, "<")
-                
-                // Animate NEXT text IN (Random letters)
-                .to(nextTitleChars, {
-                    yPercent: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: "power3.out",
-                    stagger: { from: "random", amount: 0.5 }
-                }, "<0.2")
-                
-                .to(nextDescLines, {
-                    yPercent: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: "power3.out",
-                    stagger: 0.1
-                }, "<0.4");
+                    // Move current card OUT
+                    .to(card, {
+                        y: () => -window.innerHeight,
+                        scale: 0.9,
+                        duration: 1,
+                        ease: "power2.inOut"
+                    })
+                    // Move next card IN
+                    .to(nextCard, {
+                        scale: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power2.inOut"
+                    }, "<")
+
+                    .to(categoryLines[i + 1], {
+                        width: "3rem",
+                        duration: 1,
+                        ease: "power3.out",
+                    }, "<")
+
+                    .to(nextTitle, {
+                        yPercent: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                    }, "<0.3")
+
+                    .to(nextDesc, {
+                        yPercent: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                        stagger: 0.1
+                    }, "<0.3")
+
+                    .to(splitCategories[i + 1].chars, {
+                        yPercent: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                    }, "<")
             }
         });
-        
+
         return () => {
+            splitCategories.forEach(s => s.revert());
             splitTitles.forEach(s => s.revert());
             splitDescs.forEach(s => s.revert());
         }
@@ -182,8 +209,12 @@ export default function Projects() {
                                         src={project.image}
                                         alt={`Project ${project.id}`}
                                         fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:blur-[2px]"
                                     />
+                                    {/* Overlay */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                                        <span className="text-white text-xl tracking-[0.2em] uppercase font-light">View</span>
+                                    </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-xs md:text-sm tracking-widest opacity-70 uppercase font-medium">
                                     <span>{project.category}</span>
@@ -197,7 +228,10 @@ export default function Projects() {
                     </div>
 
                     <div className="flex justify-center">
-                        <button className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300">
+                        <button
+                            onClick={() => navigate('/projects')}
+                            className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                        >
                             View All Works
                         </button>
                     </div>
@@ -227,10 +261,12 @@ export default function Projects() {
                             <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-16">
                                 <div className="max-w-3xl">
                                     <div className="flex items-center gap-4 mb-12">
-                                        <div className="w-12 h-0.5 bg-white/60"></div>
-                                        <span className="text-sm tracking-[0.2em] uppercase font-medium text-white/80">
-                                            {project.category}
-                                        </span>
+                                        <div className="featured-category-line w-0 h-0.5 bg-white/60"></div>
+                                        <div className="overflow-hidden">
+                                            <span className="featured-category text-sm tracking-[0.2em] uppercase font-medium text-white/80">
+                                                {project.category}
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div className="overflow-hidden mb-12">

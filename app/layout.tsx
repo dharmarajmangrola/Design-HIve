@@ -6,6 +6,7 @@ import SmoothScroll from "./Components/SmoothScroll";
 import Preloader from "./Components/Preloader";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import TransitionProvider from "./Components/TransitionProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,9 +30,11 @@ export default function RootLayout({
       >
         <SmoothScroll />
         <Preloader />
-        <Navbar />
-        {children}
-        <Footer />
+        <TransitionProvider>
+          <Navbar />
+           {children}
+          <Footer />
+        </TransitionProvider>
       </body>
     </html>
   );

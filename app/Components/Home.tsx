@@ -115,7 +115,7 @@ export default function Home() {
                         <h2
                             ref={titleRef}
                             key={`home-title-${windowWidth}`}
-                            className="text-4xl md:text-6xl font-light tracking-wide uppercase"
+                            className="text-4xl md:text-6xl font-light tracking-wide uppercase text-center"
                         >
                             Why Design Hive ?
                         </h2>
@@ -125,7 +125,7 @@ export default function Home() {
                         <p
                             ref={textRef}
                             key={`home-text-${windowWidth}`}
-                            className="text-lg md:text-xl leading-loose opacity-80"
+                            className="text-lg leading-loose text-center"
                         >
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
                             perspiciatis unde omnis iste natus error sit voluptatem

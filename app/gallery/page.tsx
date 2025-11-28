@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function GalleryPage() {
     const [loadedVideos, setLoadedVideos] = useState<boolean[]>([false, false, false]);
-    const [loadedImages, setLoadedImages] = useState<boolean[]>(new Array(16).fill(false));
     const [playingVideo, setPlayingVideo] = useState<number | null>(null);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -52,14 +51,6 @@ export default function GalleryPage() {
 
     const handleVideoLoad = (index: number) => {
         setLoadedVideos((prev) => {
-            const newLoaded = [...prev];
-            newLoaded[index] = true;
-            return newLoaded;
-        });
-    };
-
-    const handleImageLoad = (index: number) => {
-        setLoadedImages((prev) => {
             const newLoaded = [...prev];
             newLoaded[index] = true;
             return newLoaded;
@@ -162,16 +153,12 @@ export default function GalleryPage() {
                             className="gallery-item flex flex-col group"
                         >
                             <div className="relative w-full aspect-square overflow-hidden mb-4 bg-gray-200">
-                                {!loadedImages[index] && (
-                                    <div className="absolute inset-0 bg-gray-300 animate-pulse" />
-                                )}
                                 <Image
                                     src={src}
                                     alt={`Gallery Image ${index + 1}`}
                                     fill
-                                    className={`object-cover transition-all duration-700 ease-in-out group-hover:scale-105 ${loadedImages[index] ? "opacity-100" : "opacity-0"
-                                        }`}
-                                    onLoad={() => handleImageLoad(index)}
+                                    className="object-cover transition-all duration-500 ease-in-out group-hover:scale-105 opacity-0"
+                                    onLoadingComplete={(image) => image.classList.remove("opacity-0")}
                                 />
                             </div>
 

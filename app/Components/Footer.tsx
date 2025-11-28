@@ -9,10 +9,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import { useTransition } from "./TransitionProvider";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default function Footer() {
+    const { navigate } = useTransition();
     const containerRef = useRef<HTMLDivElement>(null);
     const qualityRef = useRef<HTMLSpanElement>(null);
     const creativityRef = useRef<HTMLSpanElement>(null);
@@ -82,8 +84,8 @@ export default function Footer() {
             }
         }
 
-    }, { 
-        scope: containerRef, 
+    }, {
+        scope: containerRef,
         dependencies: [isFooterReady] // Key dependency: Re-run this when ready becomes true
     });
 
@@ -98,7 +100,10 @@ export default function Footer() {
                     <span ref={qualityRef} className="block">Focused on Quality</span>
                     <span ref={creativityRef} className="block mt-4 md:mt-0">Driven by Creativity</span>
                 </h2>
-                <button className="px-10 py-5 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300">
+                <button
+                    onClick={() => navigate('/contact')}
+                    className="px-10 py-5 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                >
                     Start a Project
                 </button>
             </div>
@@ -107,13 +112,13 @@ export default function Footer() {
             <div className="w-full px-8 md:px-16 lg:px-24 pb-8 mt-20">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24 justify-items-center items-start">
                     {/* Logo Column */}
-                    <div className="md:col-span-3 flex flex-col justify-start">
-                        <div className="flex items-center gap-2 mix-blend-difference">
+                    <div className="md:col-span-3 h-full flex flex-col justify-start items-center">
+                        <div className="flex justify-center items-center gap-2 h-full mix-blend-difference">
                             <Image
                                 src="/logo.png"
                                 alt="Design Hive Logo"
-                                width={160}
-                                height={160}
+                                width={200}
+                                height={200}
                                 className="object-contain"
                             />
                         </div>
@@ -170,9 +175,9 @@ export default function Footer() {
 
                 {/* Big Text with Ref */}
                 <div className="w-full overflow-hidden mb-16">
-                    <h1 
-                        ref={titleRef} 
-                        className="text-[12vw] leading-none font-light tracking-tighter text-center"
+                    <h1
+                        ref={titleRef}
+                        className="text-[15vw] md:text-[12vw] leading-none font-light tracking-tighter text-center"
                     >
                         DESIGN HIVE
                     </h1>

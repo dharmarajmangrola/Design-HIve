@@ -58,7 +58,7 @@ export default function ProjectsPage() {
                         {projects.map((src, index) => (
                             <div
                                 key={index}
-                                className="relative h-full aspect-[4/5] overflow-hidden shrink-0 bg-gray-200 group"
+                                className="relative h-full aspect-4/5 overflow-hidden shrink-0 bg-gray-200 group"
                             >
                                 <Image
                                     src={src}
@@ -66,7 +66,7 @@ export default function ProjectsPage() {
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                                <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <p className="text-white font-medium uppercase text-sm">Lorem House</p>
                                 </div>
                             </div>
