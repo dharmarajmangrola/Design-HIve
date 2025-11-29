@@ -5,15 +5,20 @@ import { SplitText } from "gsap/all";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "./TransitionProvider";
 
 gsap.registerPlugin(SplitText);
 
 export default function Navbar() {
+    const { navigate } = useTransition();
+    const router = useRouter();
+    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+
     // 1. Re-added state to track scrolling
     const [isScrolled, setIsScrolled] = useState(false);
-    
+
     const containerRef = useRef<HTMLDivElement>(null);
     const leftPanelRef = useRef<HTMLDivElement>(null);
     const rightPanelRef = useRef<HTMLDivElement>(null);
@@ -80,19 +85,31 @@ export default function Navbar() {
     return (
         <div ref={containerRef}>
             <nav
-                className={`fixed top-0 left-0 w-full flex justify-between items-center mix-blend-difference px-8 z-50 text-background transition-all duration-500 ${
-                    isScrolled 
-                    ? "backdrop-blur-md" 
+                className={`fixed top-0 left-0 w-full flex justify-between items-center mix-blend-difference px-8 z-50 text-background transition-all duration-500 ${isScrolled
+                    ? "backdrop-blur-md"
                     : "backdrop-blur-none"
-                }`}
+                    }`}
             >
-                <div className="flex items-center gap-2">
+                <div
+                    className="flex items-center gap-2 cursor-pointer"
+                    onClick={() => {
+                        if (isMenuOpen) {
+                            toggleMenu();
+                        } else if (pathname === '/') {
+                            setTimeout(() => {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }, 500);
+                        } else {
+                            navigate('/');
+                        }
+                    }}
+                >
                     <Image
                         src="/logo.png"
                         alt="Design Hive Logo"
                         width={125}
                         height={125}
-                        className="object-contain h-22 w-auto" 
+                        className="object-contain h-22 w-auto"
                     />
                 </div>
 
@@ -123,41 +140,36 @@ export default function Navbar() {
                     className={`absolute inset-0 flex flex-col justify-center items-center text-white z-50 ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
                 >
                     <div className="flex flex-col gap-8 text-center">
-                        <Link
-                            href="/"
-                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0"
-                            onClick={toggleMenu}
+                        <div
+                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
+                            onClick={() => { toggleMenu(); router.push('/'); }}
                         >
                             Home
-                        </Link>
-                        <Link
-                            href="/projects"
-                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0"
-                            onClick={toggleMenu}
+                        </div>
+                        <div
+                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
+                            onClick={() => { toggleMenu(); router.push('/projects'); }}
                         >
                             Projects
-                        </Link>
-                        <Link
-                            href="/about"
-                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0"
-                            onClick={toggleMenu}
+                        </div>
+                        <div
+                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
+                            onClick={() => { toggleMenu(); router.push('/about'); }}
                         >
                             About
-                        </Link>
-                        <Link
-                            href="/gallery"
-                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0"
-                            onClick={toggleMenu}
+                        </div>
+                        <div
+                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
+                            onClick={() => { toggleMenu(); router.push('/gallery'); }}
                         >
                             Gallery
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0"
-                            onClick={toggleMenu}
+                        </div>
+                        <div
+                            className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
+                            onClick={() => { toggleMenu(); router.push('/contact'); }}
                         >
                             Contact
-                        </Link>
+                        </div>
                     </div>
                 </div>
             </div>

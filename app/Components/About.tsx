@@ -112,7 +112,6 @@ export default function About() {
                 clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
                 duration: 1,
                 ease: "power3.out",
-                stagger: 0.05
             })
             .to(splitTeamText.lines, {
                 y: "0%",

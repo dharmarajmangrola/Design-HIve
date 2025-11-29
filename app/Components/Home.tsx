@@ -69,7 +69,7 @@ export default function Home() {
                 duration: 1,
                 ease: "power3.out",
                 stagger: 0.05
-            }, "-=0.8");
+            }, "-=0.9");
 
             return () => {
                 splitTitle.revert();

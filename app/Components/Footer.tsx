@@ -70,7 +70,7 @@ export default function Footer() {
                 yPercent: 0,
                 duration: 1.5,
                 ease: "power4.out",
-                stagger: { from: "random", amount: 0.1 }, // Random "Rain" effect
+                stagger: { from: "random", amount: 0.2 }, // Random "Rain" effect
                 scrollTrigger: {
                     trigger: titleRef.current,
                     start: "top 85%", // Trigger slightly earlier
@@ -128,18 +128,29 @@ export default function Footer() {
                     <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center md:items-start">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(NAVIGATION)</h3>
                         <nav className="flex flex-col gap-2 text-lg opacity-80 items-center">
-                            <Link href="/" className="hover:opacity-100 transition-opacity">Home</Link>
-                            <Link href="/about" className="hover:opacity-100 transition-opacity">About Us</Link>
-                            <Link href="/projects" className="hover:opacity-100 transition-opacity">Projects</Link>
-                            <Link href="/gallery" className="hover:opacity-100 transition-opacity">Gallery</Link>
-                            <Link href="/contact" className="hover:opacity-100 transition-opacity">Contact Us</Link>
+                            <div
+                                onClick={() => {
+                                    if (pathname === '/') {
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    } else {
+                                        navigate('/');
+                                    }
+                                }}
+                                className="cursor-pointer hover:opacity-60 transition-opacity"
+                            >
+                                Home
+                            </div>
+                            <div onClick={() => navigate('/about')} className="cursor-pointer hover:opacity-60 transition-opacity">About Us</div>
+                            <div onClick={() => navigate('/projects')} className="cursor-pointer hover:opacity-60 transition-opacity">Projects</div>
+                            <div onClick={() => navigate('/gallery')} className="cursor-pointer hover:opacity-60 transition-opacity">Gallery</div>
+                            <div onClick={() => navigate('/contact')} className="cursor-pointer hover:opacity-60 transition-opacity">Contact Us</div>
                         </nav>
                     </div>
 
                     {/* Follow Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center md:items-start">
+                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(FOLLOW)</h3>
-                        <div className="flex flex-col gap-4 text-lg opacity-80 items-center md:items-start">
+                        <div className="flex flex-col gap-4 text-lg opacity-80 items-center">
                             <a href="#" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
                                 <FaInstagram className="text-xl" /> Instagram
                             </a>
@@ -153,22 +164,21 @@ export default function Footer() {
                     </div>
 
                     {/* Information Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center md:items-start">
+                    <div className="md:col-span-3 flex flex-col gap-6 justify-center items-center">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(INFORMATION)</h3>
-                        <div className="flex flex-col gap-4 text-lg opacity-80 items-center md:items-start text-center md:text-left">
-                            <p className="flex items-center gap-3 justify-center md:justify-start">
+                        <div className="flex flex-col gap-4 text-lg opacity-80 items-center text-center md:text-left">
+                            <p className="flex items-center gap-3 justify-center text-center">
                                 <MdLocationOn className="text-xl shrink-0" />
-                                <span>1032, lorem isoum, 290834</span>
+                                <span>1032, lorem</span>
                             </p>
-                            <p className="flex items-center gap-3 justify-center md:justify-start">
+                            <p className="flex items-center gap-3 justify-center">
                                 <MdEmail className="text-xl shrink-0" />
                                 <span>info@lorem.com</span>
                             </p>
-                            <p className="flex items-center gap-3 justify-center md:justify-start">
+                            <p className="flex items-center gap-3 justify-center">
                                 <MdPhone className="text-xl shrink-0" />
                                 <span>0283383838</span>
                             </p>
-                            <p className="mt-2 text-base opacity-60">Monday to Friday, 8:30am - 5:00pm</p>
                         </div>
                     </div>
                 </div>
@@ -187,12 +197,6 @@ export default function Footer() {
                 <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs md:text-sm uppercase tracking-widest opacity-60 gap-4 md:gap-0 border-t border-black/10 pt-8">
                     <div className="text-center md:text-left">
                         <p>&copy; 2025 DESIGN HIVE</p>
-                        <p>SURAT, WE ARE OPEN</p>
-                    </div>
-
-                    <div className="flex gap-8">
-                        <a href="#" className="hover:opacity-100">PRIVACY POLICY</a>
-                        <a href="#" className="hover:opacity-100">TERMS OF SERVICE</a>
                     </div>
 
                     <div className="text-center md:text-right">

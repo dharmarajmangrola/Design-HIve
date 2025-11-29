@@ -79,7 +79,7 @@ export default function ProjectsPage() {
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
                                         <span className="text-white text-xl tracking-[0.2em] uppercase font-light">View</span>
                                     </div>
-                                    <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     </div>
                                 </div>
 
