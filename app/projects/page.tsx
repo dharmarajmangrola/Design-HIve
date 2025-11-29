@@ -4,16 +4,24 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTransition } from "../Components/TransitionProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectsPage() {
+    const { navigate } = useTransition();
     const [isMounted, setIsMounted] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const sliderRef = useRef<HTMLDivElement>(null);
     const progressRef = useRef<HTMLSpanElement>(null);
 
-    const projects = Array.from({ length: 10 }, (_, i) => `/project-${i + 1}.jpg`);
+    const projects = Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1,
+        image: `/project-${i + 1}.jpg`,
+        category: "ARCHITECTURE",
+        type: "RESIDENTIAL",
+        year: "2024"
+    }));
 
     useEffect(() => {
         setIsMounted(true);
@@ -53,28 +61,42 @@ export default function ProjectsPage() {
                     {/* Horizontal Slider */}
                     <div
                         ref={sliderRef}
-                        className="flex gap-10 px-10 items-center h-[60vh] w-max"
+                        className="flex gap-6 px-6 md:gap-10 md:px-10 items-center h-[55vh] md:h-[70vh] w-max"
                     >
-                        {projects.map((src, index) => (
+                        {projects.map((project, index) => (
                             <div
                                 key={index}
-                                className="relative h-full aspect-4/5 overflow-hidden shrink-0 bg-gray-200 group"
+                                onClick={() => navigate(`/projects/project-${project.id}`)}
+                                className="flex flex-col gap-4 h-full shrink-0 group cursor-pointer"
                             >
-                                <Image
-                                    src={src}
-                                    alt={`Project ${index + 1}`}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                                <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <p className="text-white font-medium uppercase text-sm">Lorem House</p>
+                                <div className="relative h-[85%] aspect-4/5 overflow-hidden bg-gray-200">
+                                    <Image
+                                        src={project.image}
+                                        alt={`Project ${project.id}`}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                                        <span className="text-white text-xl tracking-[0.2em] uppercase font-light">View</span>
+                                    </div>
+                                    <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    </div>
+                                </div>
+
+                                {/* Project Details */}
+                                <div className="flex items-center gap-2 text-xs tracking-widest opacity-70 uppercase font-medium text-[#171717]">
+                                    <span>{project.category}</span>
+                                    <span className="text-[10px]">|</span>
+                                    <span>{project.type}</span>
+                                    <span className="text-[10px]">|</span>
+                                    <span>{project.year}</span>
                                 </div>
                             </div>
                         ))}
                     </div>
 
                     {/* Progress Indicator */}
-                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#171717] font-medium tracking-widest text-sm uppercase flex items-center gap-2">
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#171717] font-medium tracking-widest text-xs md:text-sm uppercase flex items-center gap-2 whitespace-nowrap">
                         <span>Scroll Down to Explore</span>
                         <span ref={progressRef}>(00%)</span>
                     </div>

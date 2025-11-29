@@ -203,7 +203,7 @@ export default function Projects() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
                         {projects.map((project) => (
-                            <div key={project.id} className="group cursor-pointer">
+                            <div key={project.id} className="group cursor-pointer" onClick={() => navigate(`/projects/project-${project.id}`)}>
                                 <div className="relative w-full aspect-4/3 overflow-hidden rounded-2xl mb-6">
                                     <Image
                                         src={project.image}
