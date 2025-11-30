@@ -258,19 +258,19 @@ export default function Projects() {
 
                         {/* Content */}
                         <div className="relative z-20 w-full h-full flex flex-col justify-end p-8 md:p-16 lg:p-24">
-                            <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-16">
+                            <div className="w-full flex flex-col md:flex-row md:items-end justify-between">
                                 <div className="max-w-3xl">
-                                    <div className="flex items-center gap-4 mb-12">
+                                    <div className="flex items-center gap-4 mb-8 md:mb-12">
                                         <div className="featured-category-line w-0 h-0.5 bg-white/60"></div>
                                         <div className="overflow-hidden">
-                                            <span className="featured-category text-sm tracking-[0.2em] uppercase font-medium text-white/80">
+                                            <span className="featured-category whitespace-nowrap text-sm tracking-[0.2em] uppercase font-medium text-white/80">
                                                 {project.category}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="overflow-hidden mb-12">
-                                        <h3 className="featured-title text-5xl md:text-7xl lg:text-8xl font-light leading-[0.9] uppercase tracking-tight">
+                                    <div className="overflow-hidden mb-8 md:mb-12">
+                                        <h3 className="featured-title text-4xl whitespace-nowrap md:text-7xl lg:text-8xl font-light leading-[0.9] uppercase tracking-tight">
                                             {project.title}
                                         </h3>
                                     </div>

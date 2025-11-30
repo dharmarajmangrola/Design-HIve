@@ -125,8 +125,8 @@ export default function Footer() {
                     </div>
 
                     {/* Navigation Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center md:items-start">
-                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(NAVIGATION)</h3>
+                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center">
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(EXPLORE)</h3>
                         <nav className="flex flex-col gap-2 text-lg opacity-80 items-center">
                             <div
                                 onClick={() => {
@@ -149,7 +149,7 @@ export default function Footer() {
 
                     {/* Follow Column */}
                     <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center">
-                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(FOLLOW)</h3>
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(FOLLOW US)</h3>
                         <div className="flex flex-col gap-4 text-lg opacity-80 items-center">
                             <a href="#" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
                                 <FaInstagram className="text-xl" /> Instagram
@@ -165,15 +165,15 @@ export default function Footer() {
 
                     {/* Information Column */}
                     <div className="md:col-span-3 flex flex-col gap-6 justify-center items-center">
-                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(INFORMATION)</h3>
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(REACH US)</h3>
                         <div className="flex flex-col gap-4 text-lg opacity-80 items-center text-center md:text-left">
                             <p className="flex items-center gap-3 justify-center text-center">
                                 <MdLocationOn className="text-xl shrink-0" />
-                                <span>1032, lorem</span>
+                                <span>1032, Fifth Avenue, New York</span>
                             </p>
                             <p className="flex items-center gap-3 justify-center">
                                 <MdEmail className="text-xl shrink-0" />
-                                <span>info@lorem.com</span>
+                                <span>info@designhive.com</span>
                             </p>
                             <p className="flex items-center gap-3 justify-center">
                                 <MdPhone className="text-xl shrink-0" />
@@ -187,7 +187,7 @@ export default function Footer() {
                 <div className="w-full overflow-hidden mb-16">
                     <h1
                         ref={titleRef}
-                        className="text-[15vw] md:text-[12vw] leading-none font-light tracking-tighter text-center"
+                        className="text-[15vw] md:text-[12vw] leading-none font-light tracking-tighter text-center whitespace-nowrap"
                     >
                         DESIGN HIVE
                     </h1>

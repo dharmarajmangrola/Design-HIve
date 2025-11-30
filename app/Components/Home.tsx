@@ -14,7 +14,7 @@ export default function Home() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const textRef = useRef<HTMLParagraphElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    
+
     // FIX PART 1: Add a state to track if the component has mounted
     const [isMounted, setIsMounted] = useState(false);
     const [windowWidth, setWindowWidth] = useState(0);
@@ -63,13 +63,13 @@ export default function Home() {
                 duration: 1,
                 ease: "power3.out"
             })
-            .to(splitText.lines, {
-                y: "0%",
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                duration: 1,
-                ease: "power3.out",
-                stagger: 0.05
-            }, "-=0.9");
+                .to(splitText.lines, {
+                    y: "0%",
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    duration: 1,
+                    ease: "power3.out",
+                    stagger: 0.05
+                }, "-=0.9");
 
             return () => {
                 splitTitle.revert();
@@ -127,13 +127,7 @@ export default function Home() {
                             key={`home-text-${windowWidth}`}
                             className="text-lg leading-loose text-center"
                         >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
-                            perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                            quae ab illo inventore veritatis et quasi architecto beatae vitae
-                            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut
-                            perspiciatis unde omnis iste natus error sit voluptatem  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            At Design Hive, we believe architecture is more than just buildings; it's about crafting experiences that inspire and endure. Our approach blends innovative design with sustainable practices to create spaces that resonate with their environment and the people who inhabit them. From concept to completion, we are dedicated to excellence, ensuring every detail reflects our commitment to quality and creativity.
                         </p>
                     </div>
                 </div>

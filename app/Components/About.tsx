@@ -148,10 +148,10 @@ export default function About() {
                 {/* KEY FIX: Applying key to the container of the text paragraphs */}
                 <div className="space-y-12 text-lg leading-relaxed opacity-80" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+                        Founded on the principles of visionary design and meticulous craftsmanship, Design Hive has established itself as a leader in contemporary architecture. We are a collective of passionate architects, designers, and thinkers who strive to push the boundaries of what is possible. Our portfolio spans residential, commercial, and public projects, each characterized by a unique narrative and a deep respect for context.
                     </p>
                     <p ref={textRef2}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+                        We collaborate closely with our clients to understand their aspirations and translate them into reality. Our process is iterative and inclusive, fostering a dialogue that enriches the final outcome. Whether it's a private residence or a large-scale urban development, we bring the same level of dedication and artistic integrity to every project we undertake.
                     </p>
                 </div>
 
@@ -172,7 +172,7 @@ export default function About() {
             <div ref={imageSectionRef} className="w-full max-w-4xl flex flex-col gap-12 py-12 px-8 md:px-16 lg:px-24">
                 {/* Row 1: Text + Image (Fade in from Right) */}
                 <div className="about-row-1 flex flex-col md:flex-row items-center justify-center gap-8 opacity-0 blur-sm translate-x-20">
-                    <span className="text-6xl md:text-8xl font-light tracking-tighter">loremisp</span>
+                    <span className="text-6xl md:text-8xl font-light tracking-tighter">VISION</span>
                     <div className="relative w-48 h-32 md:w-64 md:h-40 rounded-2xl overflow-hidden">
                         <img src="/about-img-1.jpg" alt="About Image 1" className="object-cover w-full h-full" />
                     </div>
@@ -202,7 +202,7 @@ export default function About() {
                     </div>
                     <div className="overflow-hidden">
                         <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg opacity-80 leading-relaxed">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+                            Our team is our greatest asset. Comprising diverse talents from around the globe, we bring a wealth of experience and fresh perspectives to every challenge. We foster a culture of continuous learning and innovation, where every member is empowered to contribute their best work. Together, we are building a legacy of architectural excellence.
                         </p>
                     </div>
                 </div>
