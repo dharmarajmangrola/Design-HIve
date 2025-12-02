@@ -13,6 +13,7 @@ export default function Home() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const textRef = useRef<HTMLParagraphElement>(null);
+    const textRef2 = useRef<HTMLParagraphElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
     // FIX PART 1: Add a state to track if the component has mounted
@@ -41,10 +42,11 @@ export default function Home() {
 
     useGSAP(
         () => {
-            if (!titleRef.current || !textRef.current) return;
+            if (!titleRef.current || !textRef.current || !textRef2.current) return;
 
             const splitTitle = new SplitText(titleRef.current, { type: 'lines' });
             const splitText = new SplitText(textRef.current, { type: 'lines' });
+            const splitText2 = new SplitText(textRef2.current, { type: 'lines' });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -55,7 +57,7 @@ export default function Home() {
             });
 
             gsap.set(splitTitle.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
-            gsap.set(splitText.lines, { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
+            gsap.set([splitText.lines, splitText2.lines], { y: "100%", clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" });
 
             tl.to(splitTitle.lines, {
                 y: "0%",
@@ -69,11 +71,19 @@ export default function Home() {
                     duration: 1,
                     ease: "power3.out",
                     stagger: 0.05
-                }, "-=0.9");
+                }, "-=0.9")
+                .to(splitText2.lines, {
+                    y: "0%",
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    duration: 1,
+                    ease: "power3.out",
+                    stagger: 0.05
+                }, "-=0.8");
 
             return () => {
                 splitTitle.revert();
                 splitText.revert();
+                splitText2.revert();
             };
         },
         { scope: containerRef, dependencies: [windowWidth] }
@@ -111,23 +121,30 @@ export default function Home() {
             {/* Why Design Hive Section */}
             <section className="w-full py-24 px-8 md:px-16 lg:px-24 bg-background text-foreground">
                 <div className="max-w-7xl mx-auto">
-                    <div className="overflow-hidden mb-12">
+                    <div className="overflow-hidden mb-16">
                         <h2
                             ref={titleRef}
                             key={`home-title-${windowWidth}`}
-                            className="text-4xl md:text-6xl font-light tracking-wide uppercase text-center"
+                            className="text-4xl md:text-6xl tracking-wide uppercase text-center"
                         >
                             Why Design Hive ?
                         </h2>
                     </div>
 
-                    <div className="mb-10">
+                    <div className="space-y-8">
                         <p
                             ref={textRef}
                             key={`home-text-${windowWidth}`}
-                            className="text-lg leading-loose text-center"
+                            className="text-lg leading-relaxed opacity-70"
                         >
                             At Design Hive, we believe architecture is more than just buildings; it's about crafting experiences that inspire and endure. Our approach blends innovative design with sustainable practices to create spaces that resonate with their environment and the people who inhabit them. From concept to completion, we are dedicated to excellence, ensuring every detail reflects our commitment to quality and creativity.
+                        </p>
+                        <p
+                            ref={textRef2}
+                            key={`home-text-2-${windowWidth}`}
+                            className="text-lg leading-relaxed opacity-70"
+                        >
+                            We view every project as a unique opportunity to tell a story. By collaborating closely with our clients, we transform abstract ideas into tangible realities that stand the test of time. Our team of visionary architects and designers constantly pushes the boundaries of form and function, delivering solutions that are not only visually stunning but also deeply purposeful and contextually relevant.
                         </p>
                     </div>
                 </div>

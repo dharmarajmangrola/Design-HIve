@@ -14,6 +14,7 @@ export default function About() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const textRef1 = useRef<HTMLParagraphElement>(null);
     const textRef2 = useRef<HTMLParagraphElement>(null);
+
     const imageSectionRef = useRef<HTMLDivElement>(null);
     const teamTitleRef = useRef<HTMLHeadingElement>(null);
     const teamTextRef = useRef<HTMLParagraphElement>(null);
@@ -46,6 +47,7 @@ export default function About() {
         const splitTitle = new SplitText(titleRef.current, { type: 'lines' });
         const splitText1 = new SplitText(textRef1.current, { type: 'lines' });
         const splitText2 = new SplitText(textRef2.current, { type: 'lines' });
+
         const splitTeamTitle = new SplitText(teamTitleRef.current, { type: 'lines' });
         const splitTeamText = new SplitText(teamTextRef.current, { type: 'lines' });
 
@@ -137,28 +139,28 @@ export default function About() {
 
     return (
         <section ref={containerRef} className="min-h-screen w-full bg-background text-foreground flex flex-col items-center border-b border-black">
-            <div className="max-w-4xl w-full text-center p-8 md:p-16 lg:p-24">
+            <div className="w-full text-center p-12 md:p-22 lg:p-30">
                 <div className="overflow-hidden mb-16">
                     {/* KEY FIX: The key prop forces this element to re-render on resize, clearing old splits */}
-                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-5xl md:text-7xl font-light tracking-wide uppercase">
+                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-6xl">
                         About Us
                     </h2>
                 </div>
 
                 {/* KEY FIX: Applying key to the container of the text paragraphs */}
-                <div className="space-y-12 text-lg leading-relaxed opacity-80" key={`text-content-${windowWidth}`}>
+                <div className="space-y-6 text-lg leading-loose opacity-70 text-left" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
-                        Founded on the principles of visionary design and meticulous craftsmanship, Design Hive has established itself as a leader in contemporary architecture. We are a collective of passionate architects, designers, and thinkers who strive to push the boundaries of what is possible. Our portfolio spans residential, commercial, and public projects, each characterized by a unique narrative and a deep respect for context.
+                        Founded on the principles of visionary design and meticulous craftsmanship, Design Hive has established itself as a leader in contemporary architecture. We are a collective of passionate architects, designers, and thinkers who strive to push the boundaries of what is possible. Our approach is rooted in a deep understanding of the built environment, where every line drawn and every material chosen serves a distinct purpose in the greater narrative of the space.
                     </p>
                     <p ref={textRef2}>
-                        We collaborate closely with our clients to understand their aspirations and translate them into reality. Our process is iterative and inclusive, fostering a dialogue that enriches the final outcome. Whether it's a private residence or a large-scale urban development, we bring the same level of dedication and artistic integrity to every project we undertake.
+                        Our portfolio spans residential, commercial, and public projects, each characterized by a unique narrative and a deep respect for context. We collaborate closely with our clients to understand their aspirations and translate them into reality. Our process is iterative and inclusive, fostering a dialogue that enriches the final outcome. Whether it's a private residence or a large-scale urban development, we bring the same level of dedication and artistic integrity to every project we undertake, ensuring that the final result is not just a building, but a lasting legacy.
                     </p>
                 </div>
 
                 <div className="mt-16">
                     <button
                         onClick={() => navigate('/about')}
-                        className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                        className="px-8 py-4 bg-black text-white text-sm font-bold tracking-[0.2em] opacity-90 rounded-full cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
                     >
                         About Us
                     </button>
@@ -193,15 +195,15 @@ export default function About() {
             {/* Our Team Section */}
             <div ref={teamSectionRef} className="w-full max-w-7xl mb-32 px-8 flex flex-col md:flex-row gap-16 items-center">
                 {/* Left Text */}
-                <div className="w-full space-y-8 text-center">
+                <div className="w-full space-y-8 text-left">
                     <div>
                         <span className="md:text-xl text-[16px] opacity-80 block mb-2">HIVE Group®</span>
                         <div className="overflow-hidden">
-                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-5xl md:text-6xl whitespace-nowrap font-light">Our Team</h2>
+                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-6xl">Our Team</h2>
                         </div>
                     </div>
                     <div className="overflow-hidden">
-                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg opacity-80 leading-relaxed">
+                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg leading-relaxed opacity-70">
                             Our team is our greatest asset. Comprising diverse talents from around the globe, we bring a wealth of experience and fresh perspectives to every challenge. We foster a culture of continuous learning and innovation, where every member is empowered to contribute their best work. Together, we are building a legacy of architectural excellence.
                         </p>
                     </div>

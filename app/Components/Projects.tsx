@@ -41,22 +41,22 @@ export default function Projects() {
             id: 1,
             image: "/featured-project-1.jpg",
             title: "Modern Villa",
-            category: "Residential",
-            description: "A seamless blend of nature and modern architecture, providing a sanctuary of peace.",
+            category: "Featured Project",
+            description: "Nestled amidst lush greenery, this residence harmonizes with its surroundings through the use of organic materials and expansive glass facades. The design prioritizes natural light and fluid transitions between indoor and outdoor spaces, creating a tranquil retreat that celebrates the beauty of nature.",
         },
         {
             id: 2,
             image: "/featured-project-2.jpg",
             title: "Urban Loft",
-            category: "Commercial",
-            description: "Redefining city living with sustainable materials and smart spatial design.",
+            category: "Featured Project",
+            description: "Located in the heart of the metropolis, this project reimagines the concept of vertical living. By integrating smart home technology with sustainable building practices, we've created a dynamic environment that adapts to the needs of its residents, offering a sophisticated blend of comfort, style, and environmental responsibility.",
         },
         {
             id: 3,
             image: "/featured-project-3.jpg",
             title: "The Gallery",
-            category: "Public Space",
-            description: "An open space designed to inspire creativity and foster community interaction.",
+            category: "Featured Project",
+            description: "More than just an exhibition space, The Gallery is a cultural hub designed to provoke thought and encourage dialogue. Its fluid geometry and innovative lighting systems create an immersive atmosphere where art and architecture converge, fostering a sense of community and shared experience for all who visit.",
         },
     ];
 
@@ -189,7 +189,7 @@ export default function Projects() {
             <section className="min-h-screen w-full py-24 px-8 md:px-16 lg:px-24 flex flex-col justify-center">
                 <div className="max-w-[1400px] mx-auto w-full">
                     <div className="flex flex-col justify-center items-center mb-16 md:mb-24">
-                        <h2 className="text-5xl md:text-7xl font-light tracking-wide uppercase mb-12 text-center">
+                        <h2 className="text-5xl md:text-6xl tracking-wide uppercase mb-12 text-center">
                             Projects
                         </h2>
 
@@ -259,24 +259,24 @@ export default function Projects() {
                         {/* Content */}
                         <div className="relative z-20 w-full h-full flex flex-col justify-end p-8 md:p-16 lg:p-24">
                             <div className="w-full flex flex-col md:flex-row md:items-end justify-between">
-                                <div className="max-w-3xl">
-                                    <div className="flex items-center gap-4 mb-8 md:mb-12">
-                                        <div className="featured-category-line w-0 h-0.5 bg-white/60"></div>
+                                <div className="max-w-5xl">
+                                    <div className="flex items-center gap-4 mb-6 md:mb-8">
+                                        <div className="featured-category-line w-12 h-0.5 bg-white/60"></div>
                                         <div className="overflow-hidden">
-                                            <span className="featured-category whitespace-nowrap text-sm tracking-[0.2em] uppercase font-medium text-white/80">
+                                            <span className="featured-category whitespace-nowrap text-xs md:text-sm tracking-[0.2em] text-white/70">
                                                 {project.category}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="overflow-hidden mb-8 md:mb-12">
-                                        <h3 className="featured-title text-4xl whitespace-nowrap md:text-7xl lg:text-8xl font-light leading-[0.9] uppercase tracking-tight">
+                                    <div className="overflow-hidden mb-6 md:mb-8">
+                                        <h3 className="featured-title text-4xl md:text-5xl leading-[0.9] uppercase tracking-tight">
                                             {project.title}
                                         </h3>
                                     </div>
 
                                     <div className="overflow-hidden">
-                                        <p className="featured-desc text-lg md:text-xl text-white/70 font-light leading-relaxed max-w-xl">
+                                        <p className="featured-desc text-base md:text-lg text-white/70 font-normal leading-relaxed">
                                             {project.description}
                                         </p>
                                     </div>
