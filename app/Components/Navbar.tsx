@@ -82,13 +82,16 @@ export default function Navbar() {
         }
     });
 
+    // Determine styles based on state
+    const isHome = pathname === '/';
+    const showWhiteBg = isScrolled && !isMenuOpen;
+    const isDarkText = !isMenuOpen && (showWhiteBg || !isHome);
+
     return (
         <div ref={containerRef}>
             <nav
-                className={`fixed top-0 left-0 w-full flex justify-between items-center mix-blend-difference px-8 z-50 text-background transition-all duration-500 ${isScrolled
-                    ? "backdrop-blur-md"
-                    : "backdrop-blur-none"
-                    }`}
+                className={`fixed top-0 left-0 w-full flex justify-between items-center px-8 z-50 transition-all duration-500 ${showWhiteBg ? "bg-[#F3F0E7]" : "bg-transparent"
+                    } ${isDarkText ? "text-black" : "text-white"}`}
             >
                 <div
                     className="flex items-center gap-2 cursor-pointer"
@@ -109,7 +112,7 @@ export default function Navbar() {
                         alt="Design Hive Logo"
                         width={125}
                         height={125}
-                        className="object-contain h-22 w-auto"
+                        className={`object-contain h-22 w-auto transition-all duration-500 ${isDarkText ? "invert" : ""}`}
                     />
                 </div>
 
@@ -117,13 +120,13 @@ export default function Navbar() {
                     className="flex flex-col gap-1.5 cursor-pointer group w-10 justify-center items-end"
                     onClick={toggleMenu}
                 >
-                    <div className="w-8 h-[2px] bg-current"></div>
-                    <div className="w-8 h-[2px] bg-current"></div>
-                    <div className="w-8 h-[2px] bg-current"></div>
+                    <div className="w-8 h-[2px] bg-current transition-colors duration-500"></div>
+                    <div className="w-8 h-[2px] bg-current transition-colors duration-500"></div>
+                    <div className="w-8 h-[2px] bg-current transition-colors duration-500"></div>
                 </div>
             </nav>
 
-            {/* Menu Overlay code remains exactly the same */}
+            {/* Menu Overlay */}
             <div className="fixed inset-0 z-40 pointer-events-none">
                 <div
                     ref={leftPanelRef}
