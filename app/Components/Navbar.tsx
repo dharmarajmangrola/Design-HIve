@@ -117,9 +117,9 @@ export default function Navbar() {
                     <Image
                         src="/logo.png"
                         alt="Design Hive Logo"
-                        width={125}
-                        height={125}
-                        className={`object-contain h-22 w-auto transition-all duration-500 ${isDarkText ? "invert" : ""}`}
+                        width={80}
+                        height={80}
+                        className={`transition-all duration-500 ${isDarkText ? "invert" : ""}`}
                     />
                 </div>
 
