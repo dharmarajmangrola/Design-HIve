@@ -125,7 +125,7 @@ export default function Home() {
                         <h2
                             ref={titleRef}
                             key={`home-title-${windowWidth}`}
-                            className="text-4xl md:text-6xl tracking-wide uppercase text-center"
+                            className="text-2xl font-medium uppercase tracking-widest text-center"
                         >
                             Why Design Hive ?
                         </h2>
@@ -135,14 +135,14 @@ export default function Home() {
                         <p
                             ref={textRef}
                             key={`home-text-${windowWidth}`}
-                            className="text-lg leading-relaxed opacity-70"
+                            className="text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70"
                         >
                             At Design Hive, we believe architecture is more than just buildings; it's about crafting experiences that inspire and endure. Our approach blends innovative design with sustainable practices to create spaces that resonate with their environment and the people who inhabit them. From concept to completion, we are dedicated to excellence, ensuring every detail reflects our commitment to quality and creativity.
                         </p>
                         <p
                             ref={textRef2}
                             key={`home-text-2-${windowWidth}`}
-                            className="text-lg leading-relaxed opacity-70"
+                            className="text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70"
                         >
                             We view every project as a unique opportunity to tell a story. By collaborating closely with our clients, we transform abstract ideas into tangible realities that stand the test of time. Our team of visionary architects and designers constantly pushes the boundaries of form and function, delivering solutions that are not only visually stunning but also deeply purposeful and contextually relevant.
                         </p>

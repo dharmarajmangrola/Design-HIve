@@ -97,7 +97,7 @@ export default function Projects() {
         // 3. Step 1: Animate FIRST card text IN immediately
         tl
             .to(categoryLines[0], {
-                width: "3rem",
+                width: "2rem",
                 duration: 1,
                 ease: "power3.out",
             })
@@ -146,7 +146,7 @@ export default function Projects() {
                     }, "<")
 
                     .to(categoryLines[i + 1], {
-                        width: "3rem",
+                        width: "2rem",
                         duration: 1,
                         ease: "power3.out",
                     }, "<")
@@ -189,11 +189,11 @@ export default function Projects() {
             <section className="min-h-screen w-full py-24 px-8 md:px-16 lg:px-24 flex flex-col justify-center">
                 <div className="max-w-[1400px] mx-auto w-full">
                     <div className="flex flex-col justify-center items-center mb-16 md:mb-24">
-                        <h2 className="text-5xl md:text-6xl tracking-wide uppercase mb-12 text-center">
+                        <h2 className="text-2xl font-medium uppercase tracking-widest mb-12">
                             Projects
                         </h2>
 
-                        <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm md:text-base tracking-widest uppercase font-medium opacity-80">
+                        <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-xs md:text-sm tracking-widest [word-spacing:0.1em] opacity-70 uppercase">
                             <span className="cursor-pointer hover:opacity-100 transition-opacity">Ongoing Project</span>
                             <span className="cursor-pointer hover:opacity-100 transition-opacity">Completed Project</span>
                             <span className="cursor-pointer hover:opacity-100 transition-opacity">Proposal Project</span>
@@ -263,20 +263,20 @@ export default function Projects() {
                                     <div className="flex items-center gap-4 mb-6 md:mb-8">
                                         <div className="featured-category-line w-12 h-0.5 bg-white/60"></div>
                                         <div className="overflow-hidden">
-                                            <span className="featured-category whitespace-nowrap text-xs md:text-sm tracking-[0.2em] text-white/70">
+                                            <span className="featured-category whitespace-nowrap text-xs md:text-base tracking-[0.2em] text-white/70">
                                                 {project.category}
                                             </span>
                                         </div>
                                     </div>
 
                                     <div className="overflow-hidden mb-6 md:mb-8">
-                                        <h3 className="featured-title text-4xl md:text-5xl leading-[0.9] uppercase tracking-tight">
+                                        <h3 className="featured-title text-xs md:text-lg uppercase tracking-widest">
                                             {project.title}
                                         </h3>
                                     </div>
 
                                     <div className="overflow-hidden">
-                                        <p className="featured-desc text-base md:text-lg text-white/70 font-normal leading-relaxed">
+                                        <p className="featured-desc text-xs md:text-base tracking-widest [word-spacing:0.1em] text-white/70 font-normal leading-loose">
                                             {project.description}
                                         </p>
                                     </div>

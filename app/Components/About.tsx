@@ -142,13 +142,13 @@ export default function About() {
             <div className="w-full text-center p-12 md:p-22 lg:p-30">
                 <div className="overflow-hidden mb-16">
                     {/* KEY FIX: The key prop forces this element to re-render on resize, clearing old splits */}
-                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-6xl">
+                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-2xl font-medium uppercase tracking-widest">
                         About Us
                     </h2>
                 </div>
 
                 {/* KEY FIX: Applying key to the container of the text paragraphs */}
-                <div className="space-y-6 text-lg leading-loose opacity-70 text-left" key={`text-content-${windowWidth}`}>
+                <div className="space-y-6 text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70 text-left" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
                         Founded on the principles of visionary design and meticulous craftsmanship, Design Hive has established itself as a leader in contemporary architecture. We are a collective of passionate architects, designers, and thinkers who strive to push the boundaries of what is possible. Our approach is rooted in a deep understanding of the built environment, where every line drawn and every material chosen serves a distinct purpose in the greater narrative of the space.
                     </p>
@@ -195,15 +195,15 @@ export default function About() {
             {/* Our Team Section */}
             <div ref={teamSectionRef} className="w-full max-w-7xl mb-32 px-8 flex flex-col md:flex-row gap-16 items-center">
                 {/* Left Text */}
-                <div className="w-full space-y-8 text-left">
+                <div className="w-full space-y-6 text-left">
                     <div>
-                        <span className="md:text-xl text-[16px] opacity-80 block mb-2">HIVE Group®</span>
+                        <span className="text-xs md:text-base tracking-widest [word-spacing:0.1em] opacity-70 block mb-2">HIVE Group®</span>
                         <div className="overflow-hidden">
-                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-6xl">Our Team</h2>
+                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-2xl font-medium uppercase tracking-widest">Our Team</h2>
                         </div>
                     </div>
                     <div className="overflow-hidden">
-                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-lg leading-relaxed opacity-70">
+                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70">
                             Our team is our greatest asset. Comprising diverse talents from around the globe, we bring a wealth of experience and fresh perspectives to every challenge. We foster a culture of continuous learning and innovation, where every member is empowered to contribute their best work. Together, we are building a legacy of architectural excellence.
                         </p>
                     </div>
