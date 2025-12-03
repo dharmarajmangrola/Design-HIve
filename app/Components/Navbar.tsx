@@ -82,6 +82,13 @@ export default function Navbar() {
         }
     });
 
+    // Close menu when route changes
+    useEffect(() => {
+        if (isMenuOpen) {
+            toggleMenu();
+        }
+    }, [pathname]);
+
     // Determine styles based on state
     const isHome = pathname === '/';
     const showWhiteBg = isScrolled && !isMenuOpen;
@@ -145,31 +152,31 @@ export default function Navbar() {
                     <div className="flex flex-col gap-8 text-center">
                         <div
                             className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
-                            onClick={() => { toggleMenu(); router.push('/'); }}
+                            onClick={() => { router.push('/'); }}
                         >
                             Home
                         </div>
                         <div
                             className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
-                            onClick={() => { toggleMenu(); router.push('/projects'); }}
+                            onClick={() => { router.push('/projects'); }}
                         >
                             Projects
                         </div>
                         <div
                             className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
-                            onClick={() => { toggleMenu(); router.push('/about'); }}
+                            onClick={() => { router.push('/about'); }}
                         >
                             About
                         </div>
                         <div
                             className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
-                            onClick={() => { toggleMenu(); router.push('/gallery'); }}
+                            onClick={() => { router.push('/gallery'); }}
                         >
                             Gallery
                         </div>
                         <div
                             className="menu-link text-5xl md:text-7xl font-light uppercase tracking-widest hover:text-gray-300 transition-colors opacity-0 cursor-pointer"
-                            onClick={() => { toggleMenu(); router.push('/contact'); }}
+                            onClick={() => { router.push('/contact'); }}
                         >
                             Contact
                         </div>
