@@ -1,6 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
-import Link from "next/link";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa";
@@ -93,39 +92,40 @@ export default function Footer() {
         <footer className="w-full bg-[#F3F0E7] text-black flex flex-col justify-between items-center overflow-hidden">
 
             {/* Focused on Quality Section */}
-            <div ref={containerRef} className="w-full px-8 md:px-16 lg:px-24 py-24 text-center relative border-b border-black">
-                <div className="absolute top-0 left-0 w-full h-px bg-black"></div>
+            <div ref={containerRef} className="w-full px-8 md:px-16 lg:px-24 py-24 text-center relative">
+                <div className="absolute top-0 left-0 w-full h-px bg-foreground"></div>
 
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-light uppercase leading-tight mb-16">
-                    <span ref={qualityRef} className="block">Focused on Quality</span>
-                    <span ref={creativityRef} className="block mt-4 md:mt-0">Driven by Creativity</span>
+                <h2 className="text-4xl md:text-7xl lg:text-8xl font-medium uppercase leading-[1.15] mb-16 opacity-90">
+                    <span ref={qualityRef} className="block whitespace-nowrap">Focused on Quality</span>
+                    <span ref={creativityRef} className="block mt-4 md:mt-0 whitespace-nowrap">Driven by Creativity</span>
                 </h2>
                 <button
                     onClick={() => navigate('/contact')}
-                    className="px-10 py-5 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                    className="px-8 py-4 bg-black text-white text-xs md:text-sm font-bold tracking-[0.2em] opacity-90 rounded-full cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
                 >
                     Start a Project
                 </button>
+                <div className="absolute bottom-0 left-0 w-full h-px bg-foreground"></div>
             </div>
 
             {/* Main Footer Content */}
-            <div className="w-full px-8 md:px-16 lg:px-24 pb-8 mt-20">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24 justify-items-center items-start">
+            <div className="w-full px-8 md:px-16 lg:px-24 pb-8 mt-5 md:mt-20">
+                <div className="grid grid-cols-2 md:grid-cols-12 gap-12 mb-24 justify-items-center items-start">
                     {/* Logo Column */}
-                    <div className="md:col-span-3 h-full flex flex-col justify-start items-center">
+                    <div className="col-span-2 md:col-span-3 h-full flex flex-col justify-start items-center">
                         <div className="flex justify-center items-center gap-2 h-full mix-blend-difference">
                             <Image
                                 src="/logo.png"
                                 alt="Design Hive Logo"
-                                width={200}
-                                height={200}
+                                width={180}
+                                height={180}
                                 className="object-contain"
                             />
                         </div>
                     </div>
 
                     {/* Navigation Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center">
+                    <div className="col-span-1 md:col-span-3 flex flex-col gap-6 justify-start items-center">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(EXPLORE)</h3>
                         <nav className="flex flex-col gap-2 text-lg opacity-80 items-center">
                             <div
@@ -148,7 +148,7 @@ export default function Footer() {
                     </div>
 
                     {/* Follow Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-start items-center">
+                    <div className="col-span-1 md:col-span-3 flex flex-col gap-6 justify-start items-center">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(FOLLOW US)</h3>
                         <div className="flex flex-col gap-4 text-lg opacity-80 items-center">
                             <a href="#" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
@@ -164,7 +164,7 @@ export default function Footer() {
                     </div>
 
                     {/* Information Column */}
-                    <div className="md:col-span-3 flex flex-col gap-6 justify-center items-center">
+                    <div className="col-span-2 md:col-span-3 flex flex-col gap-6 justify-center items-center">
                         <h3 className="text-sm font-bold uppercase tracking-widest mb-2">(REACH US)</h3>
                         <div className="flex flex-col gap-4 text-lg opacity-80 items-center text-center md:text-left">
                             <p className="flex items-center gap-3 justify-center text-center">
@@ -187,14 +187,14 @@ export default function Footer() {
                 <div className="w-full overflow-hidden mb-16">
                     <h1
                         ref={titleRef}
-                        className="text-[15vw] md:text-[12vw] leading-none font-light tracking-tighter text-center whitespace-nowrap"
+                        className="text-5xl md:text-9xl leading-none font-normal uppercase text-center whitespace-nowrap opacity-90"
                     >
                         DESIGN HIVE
                     </h1>
                 </div>
 
                 {/* Bottom Section */}
-                <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs md:text-sm uppercase tracking-widest opacity-60 gap-4 md:gap-0 border-t border-black/10 pt-8">
+                <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs md:text-sm uppercase tracking-widest opacity-60 gap-4 md:gap-0 border-t border-foreground pt-8">
                     <div className="text-center md:text-left">
                         <p>&copy; 2025 DESIGN HIVE</p>
                     </div>

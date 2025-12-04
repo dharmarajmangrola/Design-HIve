@@ -110,7 +110,7 @@ export default function Projects() {
             .to(splitDescs[0].lines, {
                 yPercent: 0,
                 opacity: 1,
-                duration: 1,
+                duration: 0.8,
                 ease: "power3.out",
                 stagger: 0.1
             }, "<0.3")
@@ -161,7 +161,7 @@ export default function Projects() {
                     .to(nextDesc, {
                         yPercent: 0,
                         opacity: 1,
-                        duration: 1,
+                        duration: 0.8,
                         ease: "power3.out",
                         stagger: 0.1
                     }, "<0.3")
@@ -230,7 +230,7 @@ export default function Projects() {
                     <div className="flex justify-center">
                         <button
                             onClick={() => navigate('/projects')}
-                            className="px-8 py-4 bg-black text-white rounded-full text-sm tracking-widest cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                            className="px-8 py-4 bg-black text-white text-xs md:text-sm font-medium tracking-[0.2em] opacity-90 rounded-full cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
                         >
                             View All Works
                         </button>
@@ -239,7 +239,7 @@ export default function Projects() {
             </section>
 
             {/* Featured Projects Section */}
-            <section ref={containerRef} className="relative h-screen w-full overflow-hidden text-white flex items-center justify-center">
+            <section ref={containerRef} className="relative h-screen w-screen overflow-hidden text-white flex items-center justify-center">
                 {featuredProjects.map((project, index) => (
                     <div
                         key={project.id}
@@ -270,7 +270,7 @@ export default function Projects() {
                                     </div>
 
                                     <div className="overflow-hidden mb-6 md:mb-8">
-                                        <h3 className="featured-title text-xs md:text-lg uppercase tracking-widest">
+                                        <h3 className="featured-title text-sm md:text-lg uppercase tracking-widest">
                                             {project.title}
                                         </h3>
                                     </div>

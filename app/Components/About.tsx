@@ -138,17 +138,17 @@ export default function About() {
     }, { scope: containerRef, dependencies: [windowWidth] });
 
     return (
-        <section ref={containerRef} className="min-h-screen w-full bg-background text-foreground flex flex-col items-center border-b border-black">
+        <section ref={containerRef} className="min-h-screen w-full bg-background text-foreground flex flex-col items-center">
             <div className="w-full text-center p-12 md:p-22 lg:p-30">
-                <div className="overflow-hidden mb-16">
+                <div className="overflow-hidden mb-12 md:mb-16">
                     {/* KEY FIX: The key prop forces this element to re-render on resize, clearing old splits */}
-                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-2xl font-medium uppercase tracking-widest">
+                    <h2 ref={titleRef} key={`title-${windowWidth}`} className="text-2xl md:text-3xl font-medium uppercase tracking-widest">
                         About Us
                     </h2>
                 </div>
 
                 {/* KEY FIX: Applying key to the container of the text paragraphs */}
-                <div className="space-y-6 text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70 text-left" key={`text-content-${windowWidth}`}>
+                <div className="space-y-6 text-sm text-center md:text-left md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70" key={`text-content-${windowWidth}`}>
                     <p ref={textRef1}>
                         Founded on the principles of visionary design and meticulous craftsmanship, Design Hive has established itself as a leader in contemporary architecture. We are a collective of passionate architects, designers, and thinkers who strive to push the boundaries of what is possible. Our approach is rooted in a deep understanding of the built environment, where every line drawn and every material chosen serves a distinct purpose in the greater narrative of the space.
                     </p>
@@ -160,7 +160,7 @@ export default function About() {
                 <div className="mt-16">
                     <button
                         onClick={() => navigate('/about')}
-                        className="px-8 py-4 bg-black text-white text-sm font-bold tracking-[0.2em] opacity-90 rounded-full cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                        className="px-8 py-4 bg-black text-white text-xs md:text-sm font-bold tracking-[0.2em] opacity-90 rounded-full cursor-pointer uppercase hover:scale-105 active:scale-95 transition-all duration-300"
                     >
                         About Us
                     </button>
@@ -168,42 +168,42 @@ export default function About() {
             </div>
 
             {/* Separator Line */}
-            <div className="w-full h-1 bg-foreground/20 my-12"></div>
+            <div className="w-full h-px bg-foreground my-12"></div>
 
             {/* New Image-Text Section */}
-            <div ref={imageSectionRef} className="w-full max-w-4xl flex flex-col gap-12 py-12 px-8 md:px-16 lg:px-24">
+            <div ref={imageSectionRef} className="w-full max-w-4xl flex flex-col gap-4 md:gap-12 py-4 md:py-12 px-8 md:px-16 lg:px-24">
                 {/* Row 1: Text + Image (Fade in from Right) */}
-                <div className="about-row-1 flex flex-col md:flex-row items-center justify-center gap-8 opacity-0 blur-sm translate-x-20">
-                    <span className="text-6xl md:text-8xl font-light tracking-tighter">VISION</span>
-                    <div className="relative w-48 h-32 md:w-64 md:h-40 rounded-2xl overflow-hidden">
+                <div className="about-row-1 flex items-center justify-center gap-6 md:gap-8 opacity-0 blur-sm translate-x-20">
+                    <span className="text-4xl md:text-8xl font-medium uppercase opacity-90">VISION</span>
+                    <div className="relative w-36 h-24 md:w-64 md:h-40 rounded-2xl overflow-hidden">
                         <img src="/about-img-1.jpg" alt="About Image 1" className="object-cover w-full h-full" />
                     </div>
                 </div>
 
                 {/* Row 2: Image + Text (Fade in from Left) */}
-                <div className="about-row-2 flex flex-col md:flex-row items-center justify-center gap-8 opacity-0 blur-sm -translate-x-20">
-                    <div className="relative w-48 h-32 md:w-64 md:h-40 rounded-2xl overflow-hidden">
+                <div className="about-row-2 flex items-center justify-center gap-6 md:gap-8 opacity-0 blur-sm -translate-x-20">
+                    <div className="relative w-36 h-24 md:w-64 md:h-40 rounded-2xl overflow-hidden">
                         <img src="/about-img-2.jpg" alt="About Image 2" className="object-cover w-full h-full" />
                     </div>
-                    <span className="text-6xl md:text-8xl font-light tracking-tighter">by HIVE®</span>
+                    <span className="text-4xl md:text-8xl font-medium uppercase opacity-90">HIVE®</span>
                 </div>
             </div>
 
             {/* Separator Line */}
-            <div className="w-full h-1 bg-foreground/20 mt-12 mb-32"></div>
+            <div className="w-full h-px bg-foreground mt-12 mb-20 md:mb-30"></div>
 
             {/* Our Team Section */}
-            <div ref={teamSectionRef} className="w-full max-w-7xl mb-32 px-8 flex flex-col md:flex-row gap-16 items-center">
+            <div ref={teamSectionRef} className="w-full max-w-7xl mb-24 md:mb-32 px-8 flex flex-col md:flex-row gap-16 items-center">
                 {/* Left Text */}
-                <div className="w-full space-y-6 text-left">
+                <div className="w-full space-y-6 text-center md:text-left">
                     <div>
-                        <span className="text-xs md:text-base tracking-widest [word-spacing:0.1em] opacity-70 block mb-2">HIVE Group®</span>
-                        <div className="overflow-hidden">
-                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-2xl font-medium uppercase tracking-widest">Our Team</h2>
+                        <span className="text-sm md:text-base tracking-widest [word-spacing:0.1em] opacity-70 block mb-2">HIVE Group®</span>
+                        <div className="overflow-hidden text-center md:text-left">
+                            <h2 ref={teamTitleRef} key={`team-title-${windowWidth}`} className="text-2xl md:text-3xl font-medium uppercase tracking-widest">Our Team</h2>
                         </div>
                     </div>
                     <div className="overflow-hidden">
-                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-xs md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70">
+                        <p ref={teamTextRef} key={`team-text-${windowWidth}`} className="text-sm md:text-base tracking-widest [word-spacing:0.1em] leading-loose opacity-70">
                             Our team is our greatest asset. Comprising diverse talents from around the globe, we bring a wealth of experience and fresh perspectives to every challenge. We foster a culture of continuous learning and innovation, where every member is empowered to contribute their best work. Together, we are building a legacy of architectural excellence.
                         </p>
                     </div>
