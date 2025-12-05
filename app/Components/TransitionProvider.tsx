@@ -36,7 +36,7 @@ export default function TransitionProvider({ children }: { children: React.React
 
         tl.to([leftPanelRef.current, rightPanelRef.current], {
             x: "0%",
-            duration: 0.8,
+            duration: 0.7,
             ease: "power3.inOut",
             stagger: 0
         });

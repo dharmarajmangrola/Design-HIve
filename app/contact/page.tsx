@@ -63,10 +63,7 @@ export default function ContactPage() {
             {/* Bottom Image with Clip Path */}
             <div className="w-full h-[80vh] relative overflow-hidden">
                 <div
-                    className="absolute inset-0 w-full h-full"
-                    style={{
-                        clipPath: "ellipse(80% 100% at 50% 100%)"
-                    }}
+                    className="absolute inset-0 w-full h-full [clip-path:ellipse(150%_100%_at_50%_100%)] lg:[clip-path:ellipse(80%_100%_at_50%_100%)]"
                 >
                     <Image
                         src="/contact-img.jpg"
